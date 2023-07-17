@@ -13,6 +13,7 @@
 
     <properties>
         <openapi-generator-maven-plugin.version>6.6.0</openapi-generator-maven-plugin.version>
+        <springdoc.version>2.1.0</springdoc.version>
         <openapi-generator.root.package>org.digilinq.platform.users.generated</openapi-generator.root.package>
     </properties>
 
@@ -60,16 +61,25 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.openapitools</groupId>
-            <artifactId>openapi-generator-maven-plugin</artifactId>
-            <version>7.0.0-beta</version>
-            <scope>provided</scope>
-        </dependency>
+
+        <!-- Open API Generator -->
+<!--        <dependency>-->
+<!--            <groupId>org.openapitools</groupId>-->
+<!--            <artifactId>openapi-generator-maven-plugin</artifactId>-->
+<!--            <version>7.0.0-beta</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.openapitools</groupId>
             <artifactId>jackson-databind-nullable</artifactId>
             <version>0.2.6</version>
+        </dependency>
+
+        <!-- Swagger UI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
     </dependencies>
 
@@ -123,7 +133,6 @@
                                 <dateLibrary>java8</dateLibrary>
                                 <serializableModel>true</serializableModel>
                                 <useSpringBoot3>true</useSpringBoot3>
-
 
                                 <!--
                                 <additionalModelTypeAnnotations>@lombok.Builder @lombok.NoArgsConstructor @lombok.AllArgsConstructor</additionalModelTypeAnnotations>

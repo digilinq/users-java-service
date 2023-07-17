@@ -5,6 +5,8 @@ info:
 paths:
   /users:
     get:
+      tags:
+        - users
       description: Return list of users based on given parameters
       operationId: findUsers
       parameters:
@@ -31,6 +33,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
     post:
+      tags:
+        - users
       description: Save a new user into database
       operationId: saveUser
       requestBody:
@@ -47,6 +51,8 @@ paths:
                 $ref: '#/components/schemas/CreateUserResponse'
   /users/{userId}:
     get:
+      tags:
+        - users
       description: Return the User based on given userId, username or email
       operationId: findUser
       parameters:
@@ -69,6 +75,8 @@ paths:
           description: User not found
   /users/{userId}/credentials:
     get:
+      tags:
+        - users
       description: Return credentioals by given userId
       operationId: getUserCredentioals
       parameters:
@@ -88,7 +96,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Credential'
         403:
-          description: Forbiden
+          description: Forbidden
         404:
           description: User not found
         422:
@@ -139,3 +147,6 @@ components:
           type: string
         password:
           type: string
+tags:
+  - name: users
+    description: Users microservice
