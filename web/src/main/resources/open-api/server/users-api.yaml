@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: User microservice
-  version: 1.0.5
+  version: 1.0.6
 paths:
   /users:
     get:
@@ -77,8 +77,8 @@ paths:
     get:
       tags:
         - users
-      description: Return credentioals by given userId
-      operationId: getUserCredentioals
+      description: Return credentials by given userId
+      operationId: getUserCredentials
       parameters:
         - in: path
           name: userId

@@ -1,0 +1,754 @@
+openapi: 3.0.3
+info:
+  title: Order Unit Service API - OpenAPI 3.0
+  description: OUMS Request Handler API
+  version: 1.0.20
+servers:
+  - url: https://oums.aks-mdm-dev.retail.ah.eu-int-aholddelhaize.com/ah/merchandising/order-units/v1
+    description: Development
+  - url: https://api-gateway-tst.integration.shd.eu-int-aholddelhaize.com/ah/merchandising/order-units/v1
+    description: Test
+  - url: https://api-gateway-acc.integration.shd.eu-int-aholddelhaize.com/ah/merchandising/order-units/v1
+    description: Acceptance
+  - url: https://api-gateway.integration.shd.eu-int-aholddelhaize.com/ah/merchandising/order-units/v1
+    description: Production
+paths:
+  /order-units:
+    get:
+      tags:
+        - OUMS Request Handler Endpoints
+      summary: Populate a list of order units based on given parameters
+      description: Populate a list of order units based on given parameters, expected at least one parameters to be exists, retailItemId, supplierId or depotId
+      operationId: findAllOrderUnits
+      parameters:
+        - in: query
+          name: retailItemId
+          description: Retail Item Id
+          schema:
+            type: integer
+            format: int64
+            maximum: 999999
+          example: 439481
+        - in: query
+          name: gtin
+          description: Item GTIN supplied by Supplier
+          schema:
+            type: integer
+            format: int64
+            maximum: 99999999999999
+          example: 8710400078814
+        - in: query
+          name: supplierId
+          description: Supplier Id delivering an Order Unit
+          schema:
+            type: integer
+            format: int64
+          example: 29694
+        - in: query
+          name: siteSupplierDepotId
+          description: Find order units based on given depotId
+          schema:
+            type: integer
+            format: int64
+          example: 684571
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
+      responses:
+        200:
+          description: A list of order units has been populated successfully based on given parameters
+          headers:
+            total-count:
+              schema:
+                type: integer
+                format: int64
+              description: Total number of the items exists for orders
+            total-pages:
+              schema:
+                type: integer
+                format: int64
+              description: Total number of the pages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderUnit'
+        400:
+          description: Wrong parameters is provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad request:
+                  $ref: '#/components/examples/400Example'
+        401:
+          description: The API-Key is not provided in the request header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Unauthenticated request:
+                  $ref: '#/components/examples/401Example'
+        403:
+          description: Provided 'API-Key' http header doesn't match expected one.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Forbidden request:
+                  $ref: '#/components/examples/403Example'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Server Error:
+                  $ref: '#/components/examples/500Example'
+      security:
+        - apiKey: [ ]
+
+  /order-units/{id}:
+    get:
+      tags:
+        - OUMS Request Handler Endpoints
+      summary: Retrieve store order unit details for given orderUnitId
+      description: Order Units with related Offers
+      operationId: findOrderUnit
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderUnit'
+        400:
+          description: Wrong parameters is provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad request:
+                  $ref: '#/components/examples/400Example'
+        401:
+          description: The API-Key is not provided in the request header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Unauthenticated request:
+                  $ref: '#/components/examples/401Example'
+        403:
+          description: Provided 'API-Key' http header doesn't match expected one.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Forbidden request:
+                  $ref: '#/components/examples/403Example'
+        404:
+          description: Order Unit Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Not Found:
+                  $ref: '#/components/examples/404Example'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Server Error:
+                  $ref: '#/components/examples/500Example'
+      security:
+        - apiKey: [ ]
+components:
+  parameters:
+    pageParam:
+      name: page
+      in: query
+      description: The page to be returned
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 1
+    sizeParam:
+      name: size
+      in: query
+      description: The number of items to be returned
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 20
+        maximum: 100
+    xTransactionIdParam:
+      in: header
+      name: x-transaction-id
+      required: false
+      description: Unique identifier for singular request
+      schema:
+        type: string
+        format: uuid
+      example: edf8dc85-28d0-4ca4-8bec-928d00b41cf4
+    correlationIdParam:
+      in: header
+      name: correlation-id
+      required: false
+      description: Identifier for whole operation chain
+      schema:
+        type: string
+        format: uuid
+      example: de7656c7-0f5a-45ac-a784-a65d6ad0df95
+  examples:
+    400Example:
+      value:
+        error:
+          errorCode: '400'
+          errorMessage: Bad Request
+          errorDescription: At least one parameter should provided (retailItemId, supplierId,
+            siteSupplierDepotId)
+          errorDateTime: '2021-10-01T15:30:45.122'
+          bindingErrors: []
+        transactionId: 3ea3f7b0-80f8-11eb-acc8-0205857feb80
+    401Example:
+      value:
+        error:
+          errorCode: '401'
+          errorMessage: Unauthorised
+          errorDescription: No API-Key provided in the request
+          errorDateTime: '2021-10-01T15:30:45.122'
+          bindingErrors: []
+        transactionId: 3ea3f7b0-80f8-11eb-acc8-0205857feb80
+    403Example:
+      value:
+        error:
+          errorCode: '403'
+          errorMessage: Forbidden
+          errorDescription: API-Key provided in the request in not valid
+          errorDateTime: '2021-10-01T15:30:45.122'
+          bindingErrors: []
+        transactionId: 3ea3f7b0-80f8-11eb-acc8-0205857feb80
+    404Example:
+      value:
+        error:
+          errorCode: '404'
+          errorMessage: Not Found
+          errorDescription: Order Unit Not Found
+          errorDateTime: '2021-10-01T15:30:45.122'
+          bindingErrors: []
+        transactionId: 3ea3f7b0-80f8-11eb-acc8-0205857feb80
+    500Example:
+      value:
+        error:
+          errorCode: '500'
+          errorMessage: Server Error
+          errorDescription: Internal Server Error Occered
+          errorDateTime: '2021-10-01T15:30:45.122'
+          bindingErrors: []
+        transactionId: 3ea3f7b0-80f8-11eb-acc8-0205857feb80
+  schemas:
+    OrderUnit:
+      type: object
+      required:
+        - id
+        - name
+        - variantId
+        - multipleItemsOrderUnitId
+        - depositFlag
+        - loadCarrierType
+        - orderUnitType
+        - retailItems
+        - suppliers
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10801
+          description: Store Order Unit Id
+        name:
+          type: string
+          example: appie macar
+          description: Order Unit name
+        variantId:
+          type: integer
+          nullable: true
+          example: 0
+          description: If a retail item is having different variant then variantId would denote it e.g., Christmas variant for product. NASA# remains same, i.e., variant is the different packaging of same Order Unit
+        multipleItemsOrderUnitId:
+          type: integer
+          nullable: true
+          example: 1
+          description: When a SOU contains multiple Retail Items, a sequence number is generated by application which is stored in this column
+        depositFlag:
+          type: boolean
+          example: false
+          description: Indicator for having deposit amount associated with SOU e.g., deposit amount on crate having cola cans, which is returned when crate is returned
+        loadCarrierType:
+          type: string
+          example: OVERIG
+          description: Type of packaging of SOU e.g., BOX
+        orderUnitType:
+          type: string
+          example: S
+          description: Store Order Unit Type - single/multiple Retail Items
+        retailItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/RetailItem'
+          description: List of Retail Items used for forming SOU - will always have data
+          minItems: 1
+        suppliers:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupplierItem'
+          description: List of suppliers delivering SOU - will always have data
+          minItems: 1
+        storeOrderabilityPeriods:
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreOrderabilityPeriod'
+          description: Timeframe wherein an SOU can be ordered by a Store
+    RetailItem:
+      type: object
+      required:
+        - id
+        - quantityPerOrderUnit
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+          description: Retail Item Id
+        quantityPerOrderUnit:
+          type: number
+          format: float
+          example: 12
+          description: Quantity ordered (could be float for weight items - not including UOM as it's not present in Table)
+    SupplierItem:
+      type: object
+      required:
+        - supplier
+        - dimensions
+        - weight
+        - dateDeliverableFrom
+        - dateDeliverableUntil
+        - countryOfOrigin
+        - countryOfDeparture
+        - shippingType
+        - globalTradeItemNumbers
+        - outerPackPeriods
+        - palletPeriods
+        - siteOrderabilityPeriods
+      properties:
+        supplier:
+          $ref: '#/components/schemas/Supplier'
+        dimensions:
+          $ref: '#/components/schemas/Dimensions'
+        weight:
+          $ref: '#/components/schemas/Weight'
+        dateDeliverableFrom:
+          type: string
+          format: date
+          example: 2008-01-31
+          description: Start Date of timeframe when order can be delivered by Supplier
+        dateDeliverableUntil:
+          type: string
+          format: date
+          nullable: true
+          example: 2020-01-01
+          description: End Date of timeframe when order can be delivered by Supplier
+        countryOfOrigin:
+          type: string
+          nullable: true
+          description: Country of Origin of product (where it is produced) being delivered
+        countryOfDeparture:
+          type: string
+          nullable: true
+          description: Country from where product is being shipped to get delivered to AH
+        shippingType:
+          type: string
+          nullable: true
+          example: CONTAINER
+          description: Indicator if being shipped via Container (e.g., truck can have crates/pallets, so no container)
+        globalTradeItemNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/GlobalTradeItemNumber'
+          description: List of GTIN (Global Trade Item Number - global Item identifier)
+        outerPackPeriods:
+          type: array
+          items:
+            $ref: '#/components/schemas/OuterPackPeriod'
+          description: List of Outer Protection Packaging for SOU
+        palletPeriods:
+          type: array
+          items:
+            $ref: '#/components/schemas/PalletPeriod'
+          description: List of Pallets being used to deliver SOU
+        siteOrderabilityPeriods:
+          type: array
+          items:
+            $ref: '#/components/schemas/SiteOrderabilityPeriod'
+          description: Timeframe Based List of all depots where supplier delivers this SOU
+    Supplier:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 248773
+          description: Supplier Id
+    Dimensions:
+      type: object
+      description: Encapsulating Dimensions of SOU - If either of dimension is available then only this object will be sent in response
+      required:
+        - width
+        - length
+        - height
+        - unitOfMeasure
+      properties:
+        width:
+          type: integer
+          nullable: true
+          example: 212
+          description: Width
+        length:
+          type: integer
+          nullable: true
+          example: 350
+          description: Length
+        height:
+          type: integer
+          nullable: true
+          example: 191
+          description: Height
+        unitOfMeasure:
+          type: string
+          example: MMT
+          description: Present only when either of l/w/h is present with value
+          default: mm
+    Weight:
+      type: object
+      required:
+        - value
+        - unitOfMeasure
+      description: Weight
+      properties:
+        value:
+          type: number
+          format: float
+          nullable: true
+          example: 6.5
+        unitOfMeasure:
+          type: string
+          example: KGM
+          default: kg
+    GlobalTradeItemNumber:
+      type: object
+      required:
+        - id
+        - dateValidFrom
+        - dateValidUntil
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 8718265927506
+          description: GTIN Id
+        dateValidFrom:
+          type: string
+          format: date
+          example: 2011-10-07
+          description: Start Date of timeframe when a supplier is active on a GTIN (to be able to deliver the GTIN)
+        dateValidUntil:
+          type: string
+          format: date
+          nullable: true
+          example: 2011-10-07
+          description: End Date of timeframe when a supplier is active on a GTIN (to be able to deliver the GTIN)
+    OuterPackPeriod:
+      type: object
+      required:
+        - dateValidFrom
+        - dateValidUntil
+        - unpackFlag
+        - globalTradeItemNumber
+        - loadCarrierTypeId
+        - packagingTypeCode
+        - quantity
+      properties:
+        dateValidFrom:
+          type: string
+          format: date
+          example: 2020-08-15
+          description: Start Date of timeframe when Outer Packaging is valid
+        dateValidUntil:
+          type: string
+          format: date
+          nullable: true
+          example: 2022-10-14
+          description: End Date of timeframe when Outer Packaging is valid
+        unpackFlag:
+          type: boolean
+          nullable: true
+          example: null
+          description: Indicator if SOU needs to be unpacked in DC
+        globalTradeItemNumber:
+          type: string
+          nullable: true
+          example: null
+          description: GTIN of Outer Packaging material being used e.g., thermacol, bubble wrap
+        loadCarrierTypeId:
+          type: string
+          nullable: true
+          example: null
+          description: Type of Outer Package
+        packagingTypeCode:
+          type: string
+          nullable: true
+          example: null
+          description: Packaging Type Code
+        quantity:
+          type: integer
+          nullable: true
+          example: 1
+          description: Total number of SOU in Outer Package
+    PalletPeriod:
+      type: object
+      required:
+        - dateValidFrom
+        - dateValidUntil
+        - layersPerPallet
+        - quantityPerLayer
+        - loadCarrierTypeId
+        - globalTradeItemNumber
+        - packagingTypeCode
+        - orderMultiple
+      properties:
+        dateValidFrom:
+          type: string
+          format: date
+          example: 2020-08-15
+          description: Start Date of timeframe of Pallet validity
+        dateValidUntil:
+          type: string
+          format: date
+          nullable: true
+          example: 2022-10-14
+          description: End Date of timeframe of Pallet validity
+        layersPerPallet:
+          type: integer
+          example: 1
+          description: Number of Layers per Pallet
+        quantityPerLayer:
+          type: integer
+          example: 1
+          description: Number of SOU per layer
+        loadCarrierTypeId:
+          type: string
+          example: DIV-LC
+          description: Type of Pallet
+        globalTradeItemNumber:
+          type: string
+          nullable: true
+          example: null
+          description: Pallet's own GTIN
+        packagingTypeCode:
+          type: string
+          nullable: true
+          example: 17
+          description: Packaging Type Code
+        orderMultiple:
+          type: integer
+          example: 1
+          description: Min Quantity of SOU to order
+    SiteOrderabilityPeriod:
+      type: object
+      required:
+        - supplierDepotId
+        - storeOrderPickingUnitId
+        - dateOrderableFrom
+        - dateOrderableUntil
+      properties:
+        supplierDepotId:
+          type: integer
+          example: 1534
+          description: Supplier Depot Id
+        storeOrderPickingUnitId:
+          type: integer
+          example: 14
+          description: Order Picking Unit Id
+        dateOrderableFrom:
+          type: string
+          format: date
+          example: 1970-01-01
+          description: Start Date from when order can be placed from this Depot
+        dateOrderableUntil:
+          type: string
+          format: date
+          nullable: true
+          example: null
+          description: End Date from when order can be placed from this Depot
+    OfferPeriod:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: OFMS-UUID-OfferId (OFMS - id)
+        name:
+          type: string
+          description: OFMS-Offer-Name (OFMS - name)
+        link:
+          type: string
+          example: /offer/OFMS-UUID-OfferId
+          description: Derived - link to OFMS for this offer on GET-by-id endpoint
+        dateValidFrom:
+          type: string
+          format: date
+          example: 2023-04-17
+          description: OFMS - dateValidFrom
+        dateValidUntil:
+          type: string
+          format: date
+          example: 2023-04-18
+          description: OFMS - dateValidUntil
+        offerOrderabilityPeriods:
+          type: array
+          items:
+            $ref: '#/components/schemas/OfferOrderabilityPeriod'
+    OfferOrderabilityPeriod:
+      type: object
+      properties:
+        supplierDepotId:
+          type: integer
+          example: 12
+        storeOrderPickingUnitId:
+          type: integer
+          example: 14
+        dateOrderableFrom:
+          type: string
+          format: date
+          example: 2023-04-16
+        dateOrderableUntil:
+          type: string
+          format: date
+          example: 2023-05-05
+    StoreOrderabilityPeriod:
+      type: object
+      required:
+        - orderingType
+        - dateOrderableFrom
+        - dateOrderableUntil
+      properties:
+        orderingType:
+          type: string
+          example: E
+          description: Type of the Order
+        dateOrderableFrom:
+          type: string
+          format: date
+          example: 1990-12-03
+          description: Start Date of Timeframe
+        dateOrderableUntil:
+          type: string
+          format: date
+          nullable: true
+          example: 1996-07-07
+          description: End Date of Timeframe
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - transactionId
+      properties:
+        error:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Error'
+        transactionId:
+          type: string
+          example: 3ea3f7b0-80f8-11eb-acc8-0205857feb80
+    Error:
+      type: object
+      required:
+        - errorCode
+        - errorMessage
+        - errorDescription
+        - errorDateTime
+        - bindingErrors
+      properties:
+        errorCode:
+          type: string
+          example: 400
+        errorMessage:
+          type: string
+          example: Bad Request
+        errorDescription:
+          type: string
+          example: At least one parameter should provided (retailItemId, supplierId, siteSupplierDepotId)
+        errorDateTime:
+          type: string
+          format: date-time
+          example: 2021-10-01T15:30:45.122
+        bindingErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/BindingError'
+    BindingError:
+      type: object
+      required:
+        - code
+        - message
+        - type
+      properties:
+        code:
+          type: string
+          example: OUMSE0001
+          description: Business Error Code
+        message:
+          type: string
+          example: Business Error occured during validation
+          description: Business error Message
+        type:
+          type: string
+          format: enum
+          enum:
+            - ERROR
+            - WARNING
+          example: ERROR
+
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      name: API-Key
+      in: header
+security:
+  - apiKey: [ ]
+tags:
+  - name: OUMS Request Handler Endpoints
+    description: OUMS Request Handler Endpoints
