@@ -1,0 +1,10 @@
+# job1: detect vulnerabilities
+# job2: clean code and code smells and test coverage with sonar
+# job3: code quality with sigrid
+name: Code quality check
+on: [push]
+jobs:
+  detect-vulnerabilities:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ls
