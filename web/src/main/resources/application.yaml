@@ -1,0 +1,11 @@
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:postgresql://localhost:32424/digilinq
+    username: digiuser
+    password: digipass
+    driver-class-name: org.postgresql.Driver
+---
