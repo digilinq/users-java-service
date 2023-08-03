@@ -4,8 +4,8 @@ spring:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:postgresql://localhost:32424/digilinq
-    username: digiuser
-    password: digipass
+    url: jdbc:postgresql://localhost:5432/digilinq
+    username: digilinq
+    password: 123456
     driver-class-name: org.postgresql.Driver
 ---
