@@ -96,6 +96,7 @@
     </dependencies>
 
     <build>
+        <finalName>users</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
