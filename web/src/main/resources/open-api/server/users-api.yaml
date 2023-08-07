@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: User microservice
-  version: 1.0.6
+  version: 1.0.7
 paths:
   /users:
     get:
@@ -31,7 +31,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/UserAccount'
     post:
       tags:
         - users
@@ -68,7 +68,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserAccount'
         400:
           description: Invalid email or userId
         404:
@@ -103,7 +103,7 @@ paths:
           description: User is disabled or not activated
 components:
   schemas:
-    User:
+    UserAccount:
       type: object
       properties:
         userId:
