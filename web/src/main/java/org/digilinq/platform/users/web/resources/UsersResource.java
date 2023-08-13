@@ -35,7 +35,7 @@ public class UsersResource implements UsersApi {
 
     @Override
     public ResponseEntity<List<UserAccount>> findUsers(String username, String email) {
-        return UsersApi.super.findUsers(username, email);
+        return ResponseEntity.ok().build();
     }
 
     @Override
