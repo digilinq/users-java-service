@@ -17,6 +17,7 @@ jobs:
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
       - run: mkdir staging && cp web/target/*.jar staging
+      - run: cp deployment/Dockerfile staging
       - uses: actions/upload-artifact@v3
         with:
           name: Package
@@ -34,3 +35,4 @@ jobs:
           name: Package
       - run: pwd
       - run: ls -la
+      - run: cat Dockerfile
