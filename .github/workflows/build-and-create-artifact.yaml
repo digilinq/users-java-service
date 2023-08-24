@@ -5,7 +5,6 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -21,3 +20,13 @@ jobs:
         with:
           name: Package
           path: staging
+
+  create-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Package
+      - run: pwd
+      - run: ls -la
