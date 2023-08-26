@@ -3,8 +3,7 @@ name: Java CI
 on: [push]
 
 env:
-#  REGISTRY: docker.io
-  REGISTRY: digilinq
+  REGISTRY: docker.io
   IMAGE_NAME: users-microservice
 
 jobs:
@@ -52,7 +51,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
 #          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          images: digilinq/users-microservice
+          images: digilinq/${{ env.IMAGE_NAME }}
       - name: Build and push Docker Image
         uses: docker/build-push-action@v4
         with:
