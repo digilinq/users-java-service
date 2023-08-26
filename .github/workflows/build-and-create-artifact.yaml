@@ -47,6 +47,6 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          push: false
+          push: true
           tags: users-micro-service:1.0.0
           labels: 1.0.0
