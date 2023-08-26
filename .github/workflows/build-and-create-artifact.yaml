@@ -44,7 +44,7 @@ jobs:
           registry: ${{ env.REGISTRY }}
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metdata-action@v4
+        uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       - name: Build and push Docker Image
