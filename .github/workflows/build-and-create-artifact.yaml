@@ -4,7 +4,8 @@ on: [push]
 
 env:
 #  REGISTRY: docker.io
-  REGISTRY: docker.io
+  REGISTRY: digilinq
+  IMAGE_NAME: users-microservice
 
 jobs:
   build:
