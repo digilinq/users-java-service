@@ -48,5 +48,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: users-micro-service:1.0.0
+          tags: digilinq/users-micro-service:1.0.0
           labels: 1.0.0
