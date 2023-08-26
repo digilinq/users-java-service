@@ -2,6 +2,10 @@ name: Java CI
 
 on: [push]
 
+env:
+#  REGISTRY: docker.io
+  REGISTRY: docker.io
+
 jobs:
   build:
     name: Build maven project
