@@ -5,6 +5,8 @@ on:
     types:
       - opened
       - synchronize
+    branches:
+      - develop
 
 jobs:
   build-and-tag:
