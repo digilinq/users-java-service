@@ -3,7 +3,7 @@ name: Java CI
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
       - 'feature/*'
 env:
   REGISTRY: docker.io
