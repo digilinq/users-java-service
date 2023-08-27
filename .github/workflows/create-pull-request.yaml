@@ -1,0 +1,18 @@
+name: Build and Tag Docker Image
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - develop
+
+jobs:
+  build-and-tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set Docker Image Tag
+        id: set_tag
+        run: echo "::set-output name=tag::pr-${{ github.event.pull_request.number }}"
