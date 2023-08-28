@@ -32,4 +32,4 @@ jobs:
       -
         name: Print metadata labels
         run: >-
-          echo "Tags: ${{ steps.meta.outputs.tags }}"
+          echo "Labels: ${{ steps.meta.outputs.labels }}"
