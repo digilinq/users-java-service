@@ -3,6 +3,8 @@
 # job3: code quality with sigrid
 name: Code quality check
 on: [push]
+env:
+  IMAGE_NAME: users-microservice
 jobs:
   detect-vulnerabilities:
     runs-on: ubuntu-latest
@@ -10,5 +12,24 @@ jobs:
       -
         name: Print Event Name
         run: >-
-          echo "Event Name: ${{ github.event_name }}"          
-
+          echo "Event Name: ${{ github.event_name }}"
+      -
+        name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            digilinq/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+      -
+        name: Print metadata tags
+        run: >-
+          echo "Tags: ${{ steps.meta.outputs.tags }}"
+      -
+        name: Print metadata labels
+        run: >-
+          echo "Tags: ${{ steps.meta.outputs.tags }}"
