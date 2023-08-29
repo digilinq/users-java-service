@@ -12,6 +12,7 @@ jobs:
     steps:
       -
         run: echo "The head of this PR starts with 'feature/'"
+
   detect-vulnerabilities:
     runs-on: ubuntu-latest
     steps:
