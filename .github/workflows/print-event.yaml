@@ -1,5 +1,5 @@
 name: Print event
-on: [push,pull_request,deployment,release]
+on: [ push,pull_request,deployment,release,delete,deployment_status ]
 jobs:
   print-event:
     name: Print event
