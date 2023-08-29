@@ -6,12 +6,6 @@ on: [push,pull_request]
 env:
   IMAGE_NAME: users-microservice
 jobs:
-  prepare-configuration:
-    runs-on: ubuntu-latest
-    if:  startsWith(github.head_ref, 'feature/')
-    steps:
-      -
-        run: echo "The head of this PR starts with 'feature/'"
 
   detect-vulnerabilities:
     runs-on: ubuntu-latest

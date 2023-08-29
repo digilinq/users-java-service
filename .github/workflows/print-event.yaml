@@ -10,3 +10,6 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
           echo "$GITHUB_CONTEXT"
+      -
+        if: startsWith(github.head_ref, 'feature/')
+        run: echo "The head of this PR starts with 'feature/'"
