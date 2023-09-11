@@ -9,6 +9,7 @@ import org.digilinq.platform.users.generated.v1.model.Credential;
 import org.digilinq.platform.users.generated.v1.model.UserAccount;
 import org.digilinq.platform.users.web.mapping.RegisterUserMapper;
 import org.digilinq.platform.users.web.mapping.UserMapper;
+import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,10 +26,11 @@ public class UsersResource implements UsersApi {
     private final UserService service;
     private final UserMapper mapper;
     private final RegisterUserMapper registerUserMapper;
-
+    private final Logger logger;
 
     @Override
     public ResponseEntity<UserAccount> findUser(String userId) {
+        logger.info("Find user by id {}", userId);
         var user = service.findUserById(Long.valueOf(userId));
         return ResponseEntity.ok(mapper.map(user));
     }
