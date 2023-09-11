@@ -30,4 +30,8 @@ public class With<T> {
     public T get() {
         return value;
     }
+
+    public <R> R get(Function<T, R> mapper) {
+        return mapper.apply(value);
+    }
 }

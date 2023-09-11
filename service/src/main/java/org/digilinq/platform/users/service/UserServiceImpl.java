@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
-        return With.value(user).map(mapper::map).perform(repository::save).map(mapper::map).orElse(null);
+        return With.value(user).map(mapper::map).perform(repository::save)
+                .map(mapper::map).orElse(null);
     }
 }
