@@ -6,7 +6,7 @@ import org.digilinq.platform.users.dto.User;
 import org.digilinq.platform.users.exceptions.UserNotFoundException;
 import org.digilinq.platform.users.mapping.UserEntityMapper;
 import org.digilinq.platform.users.repository.UserRepository;
-import org.digilinq.platform.users.to.UserEntity;
+import org.digilinq.platform.users.util.With;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,8 +21,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User user){
-        UserEntity userEntity =  repository.save(mapper.map(user));
-        return mapper.map(userEntity);
+    public User saveUser(User user) {
+        return With.value(user).map(mapper::map).perform(repository::save).map(mapper::map).orElse(null);
     }
 }

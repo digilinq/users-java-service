@@ -1,19 +1,20 @@
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:demo;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:demo;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS e_users
     username: sa
     password:
   jpa:
+    show-sql: true
+    defer-datasource-initialization: true
     hibernate:
       ddl-auto: create-drop
-    defer-datasource-initialization: true
-    show-sql: true
     properties:
       hibernate:
         format_sql: true
 logging:
   level:
+    root: INFO
     org.springframework.web: DEBUG
-    org.hibernate.sql: info
+    org.hibernate.sql: INFO
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE

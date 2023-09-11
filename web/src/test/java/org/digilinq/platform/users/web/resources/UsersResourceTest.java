@@ -1,6 +1,7 @@
 package org.digilinq.platform.users.web.resources;
 
 import org.digilinq.platform.users.api.UserService;
+import org.digilinq.platform.users.configuration.LoggingConfiguration;
 import org.digilinq.platform.users.web.mapping.RegisterUserMapperImpl;
 import org.digilinq.platform.users.web.mapping.UserMapperImpl;
 import org.junit.jupiter.api.Test;
@@ -12,16 +13,16 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.digilinq.platform.users.web.constants.WebUtils.ENDPOINT_USERS;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest
-@Import({UserMapperImpl.class, RegisterUserMapperImpl.class})
+@Import({UserMapperImpl.class, RegisterUserMapperImpl.class, LoggingConfiguration.class})
 class UsersResourceTest {
 
-    public static final String BASE_URL = "/v1";
-    public static final String ENDPOINT_USERS = BASE_URL + "/users";
+
 
     @Autowired
     private MockMvc mockMvc;
@@ -55,4 +56,6 @@ class UsersResourceTest {
                 jsonPath("$").exists()
         );
     }
+
+
 }
