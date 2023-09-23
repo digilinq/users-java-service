@@ -2,11 +2,16 @@
 # job2: clean code and code smells and test coverage with sonar
 # job3: code quality with sigrid
 name: Code quality check
-on: [push,pull_request]
+
+on:
+  push:
+    branches:
+      - master
+
 env:
   IMAGE_NAME: users-microservice
-jobs:
 
+jobs:
   detect-vulnerabilities:
     runs-on: ubuntu-latest
     steps:
