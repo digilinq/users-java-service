@@ -2,17 +2,16 @@
 # job2: clean code and code smells and test coverage with sonar
 # job3: code quality with sigrid
 name: Code quality check
-on: [push,pull_request]
+
+on:
+  push:
+    branches:
+      - master
+
 env:
   IMAGE_NAME: users-microservice
-jobs:
-  prepare-configuration:
-    runs-on: ubuntu-latest
-    if:  startsWith(github.head_ref, 'feature/')
-    steps:
-      -
-        run: echo "The head of this PR starts with 'feature/'"
 
+jobs:
   detect-vulnerabilities:
     runs-on: ubuntu-latest
     steps:
