@@ -40,10 +40,30 @@ SELECT tablename FROM pg_tables WHERE schemaname = 'public';
 
 ## CI/CD
 
+### Events
 
+#### Push to feature branch
+```json
+{
+  "ref": "refs/heads/branch-name",
+  "event_name": "push"  
+}
+```
+
+#### Create pull request
+```json
+
+```
+
+#### Synchronize pull request
+#### Merge to master branch 
+#### Create tag and push the tag 
+#### Create release
 
 ### Create Docker Image
 
 #### Caching Maven Dependencies with Docker
 [Caching Maven Dependencies with Docker](https://www.baeldung.com/ops/docker-cache-maven-dependencies)
 
+### Deploy to Kubernetes
+#### Create tag

@@ -1,0 +1,23 @@
+name: Feature branch events
+on:
+  push:
+    branches:
+      - 'feature/*'
+      - '*'
+      - '!main'
+jobs:
+  print-event:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Print feature branch name
+        if: github.ref != 'main' && github.ref != 'master'
+        run: |          
+          echo "The ref is ${{ github.ref }}"
+      -
+        name: Print feature branches ref
+        if: startsWith(github.head_ref, 'feature/')
+        run: |
+          echo "The head of this PR starts with 'feature/'"
+          echo "The head of this PR starts with 'feature/'"
+
