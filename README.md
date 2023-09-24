@@ -75,6 +75,23 @@ Pull request #25 opened
 ```
 
 #### Synchronize pull request
+```json
+{
+  "ref": "refs/pull/26/merge",
+  "head_ref": "22-cicd-pipelines-for-deploy-to-kubernetes",
+  "base_ref": "main",
+  "event_name": "pull_request",
+  "event": {
+    "action": "synchronize",
+    "base": {
+      "ref": "main"
+    },
+    "head": {      
+      "ref": "branch-name"
+    }
+  }    
+}
+```
 
 #### Merge to master branch
 ```json
