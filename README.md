@@ -46,17 +46,37 @@ SELECT tablename FROM pg_tables WHERE schemaname = 'public';
 ```json
 {
   "ref": "refs/heads/branch-name",
+  "head_ref": "",
+  "base_ref": "",
   "event_name": "push"  
 }
 ```
 
 #### Create pull request
 ```json
-
+{
+  "ref": "refs/pull/24/merge",
+  "head_ref": "branch-name",
+  "base_ref": "main",
+  "event_name": "pull_request",
+  "event": {
+    "action": "opened"
+  }
+}
 ```
 
 #### Synchronize pull request
+
 #### Merge to master branch 
+```json
+{
+  "ref": "refs/heads/main",
+  "head_ref": "",
+  "base_ref": "",
+  "event_name": "push"  
+}
+```
+
 #### Create tag and push the tag 
 #### Create release
 
