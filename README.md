@@ -118,6 +118,21 @@ Pull request #25 opened
 ```
 
 #### Create tag and push the tag 
+```json
+{
+  "ref": "refs/tags/v1.0.2",
+  "head_ref": "",
+  "base_ref": "",
+  "event_name": "push",
+  "event": {
+    "base_ref": "refs/heads/main",
+    "ref": "refs/tags/v1.0.2"
+  },
+  "ref_name": "v1.0.2",
+  "ref_protected": false,
+  "ref_type": "tag"
+}
+```
 #### Create release
 
 ### Create Docker Image
