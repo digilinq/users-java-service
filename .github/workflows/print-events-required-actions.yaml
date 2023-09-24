@@ -35,4 +35,3 @@ jobs:
       - name: Push to master branch
         run: |
           echo "The ref is ${{ github.ref }}"
-...
