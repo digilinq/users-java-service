@@ -11,7 +11,7 @@ jobs:
     steps:
       -
         name: Print href
-        run: echo "The href is ${{ github.head_ref }}"
+        run: echo "The ref is ${{ github.ref }}"
       -
         name: Print feature branches ref
         if: startsWith(github.head_ref, 'feature/')
