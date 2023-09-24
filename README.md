@@ -51,7 +51,9 @@ SELECT tablename FROM pg_tables WHERE schemaname = 'public';
 ```
 
 #### Create pull request
+```json
 
+```
 
 #### Synchronize pull request
 #### Merge to master branch 
