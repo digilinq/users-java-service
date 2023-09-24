@@ -41,8 +41,18 @@ SELECT tablename FROM pg_tables WHERE schemaname = 'public';
 ## CI/CD
 
 ### Events
-#### Push to feature branch 
-#### Create pull request 
+
+#### Push to feature branch
+```json
+{
+  "ref": "refs/heads/branch-name",
+  "event_name": "push"  
+}
+```
+
+#### Create pull request
+
+
 #### Synchronize pull request
 #### Merge to master branch 
 #### Create tag and push the tag 

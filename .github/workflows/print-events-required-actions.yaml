@@ -1,0 +1,21 @@
+name: Highlights events
+on:
+  push:
+    branches:
+      - 'feature/*'
+      - '*'
+      - '!main'
+jobs:
+  print-event:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Print href
+        run: echo "${{ github.head_ref }}"
+      -
+        name: Print feature branches ref
+        if: startsWith(github.head_ref, 'feature/')
+        run: |
+          echo "The head of this PR starts with 'feature/'"
+          echo "The head of this PR starts with 'feature/'"
+          
