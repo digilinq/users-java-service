@@ -61,7 +61,15 @@ Pull request #25 opened
   "base_ref": "main",
   "event_name": "pull_request",
   "event": {
-    "action": "opened"
+    "action": "opened",
+    "pull_request": {
+      "base": {
+        "ref": "main"
+      },
+      "head": {
+        "ref": "branch-name"
+      }
+    }
   }
 }
 ```
