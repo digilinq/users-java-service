@@ -1,5 +1,5 @@
 ---
-name: Highlights events
+name: Feature branch events
 on:
   push:
     branches:
@@ -12,9 +12,8 @@ jobs:
     steps:
       -
         name: Print feature branch name
-        if: github.ref != 'main'
-        run: |
-          echo "The ref is ${{ github.ref }}"
+        if: github.ref != 'main' && github.ref != 'master'
+        run: |          
           echo "The ref is ${{ github.ref }}"
       -
         name: Print feature branches ref
@@ -22,4 +21,18 @@ jobs:
         run: |
           echo "The head of this PR starts with 'feature/'"
           echo "The head of this PR starts with 'feature/'"
-          
+---
+name: Master branch events
+on:
+  push:
+    branches:
+      - master
+      - main
+jobs:
+  print-event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push to master branch
+        run: |
+          echo "The ref is ${{ github.ref }}"
+...
