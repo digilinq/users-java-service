@@ -1,0 +1,13 @@
+name: Master branch events
+on:
+  push:
+    branches:
+      - master
+      - main
+jobs:
+  print-event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push to master branch
+        run: |
+          echo "The ref is ${{ github.ref }}"
