@@ -4,10 +4,16 @@ on:
     branches:
       - master
       - main
+  pull_request:
+    branches:
+      - master
+      - main
 jobs:
   print-event:
     runs-on: ubuntu-latest
     steps:
-      - name: Push to master branch
+      - name: Print GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
-          echo "The ref is ${{ github.ref }}"
+          echo "$GITHUB_CONTEXT"

@@ -5,6 +5,11 @@ on:
       - 'feature/*'
       - '*'
       - '!main'
+  pull_request:
+    branches:
+      - '!master'
+      - '!main'
+      - '*'
 jobs:
   print-event:
     runs-on: ubuntu-latest
@@ -15,9 +20,8 @@ jobs:
         run: |          
           echo "The ref is ${{ github.ref }}"
       -
-        name: Print feature branches ref
-        if: startsWith(github.head_ref, 'feature/')
+        name: Print GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
-          echo "The head of this PR starts with 'feature/'"
-          echo "The head of this PR starts with 'feature/'"
-
+          echo "$GITHUB_CONTEXT"
