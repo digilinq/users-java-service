@@ -2,8 +2,9 @@ name: Create tag on master branch
 on:
   push:
     branches:
-      - master
-      - main
+#      - master
+#      - main
+      - 'test/*'
     tags:
       - 'v*'
 env:

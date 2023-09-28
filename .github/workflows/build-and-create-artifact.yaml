@@ -3,8 +3,7 @@ name: Java CI
 on:
   push:
     branches:
-      - 'main'
-      - 'feature/*'
+      - master
 env:
   REGISTRY: docker.io
   IMAGE_NAME: users-microservice
