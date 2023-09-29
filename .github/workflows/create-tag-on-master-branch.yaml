@@ -1,10 +1,6 @@
 name: Create tag on master branch
 on:
   push:
-#    branches:
-#      - master
-#      - main
-#      - 'test/*'
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 env:
@@ -13,27 +9,22 @@ env:
 jobs:
   build:
     name: Build maven project
+    if: endsWith(github.event.base_ref, 'main') == true
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Set up JDK 17
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      -
-        name: Build with Maven
+      - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify -DskipTests
-      -
-        run: mkdir staging && cp web/target/*.jar staging
-      -
-        run: cp deployment/Dockerfile staging
-      -
-        uses: actions/upload-artifact@v3
+      - run: mkdir staging && cp web/target/*.jar staging
+      - run: cp deployment/Dockerfile staging
+      - uses: actions/upload-artifact@v3
         with:
           name: Package
           path: staging
