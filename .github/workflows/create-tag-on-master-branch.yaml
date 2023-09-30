@@ -8,13 +8,6 @@ env:
   DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   IMAGE_NAME: users-microservice
 jobs:
-  print:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo ${{ github.event.base_ref }}
-          echo ${{ github.ref }}
-          echo ${{ endsWith(github.event.base_ref, 'main') }}
   build:
     name: Build maven project
 #    if: endsWith(github.event.base_ref, 'main') == true
