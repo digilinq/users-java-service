@@ -5,7 +5,7 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 env:
   REGISTRY: docker.io
-  DOCKER_HUB_USERNAME: digilinq
+  DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   IMAGE_NAME: users-microservice
 jobs:
   build:
@@ -51,7 +51,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            digilinq/${{ env.IMAGE_NAME }}
+            ${{ env.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
           tags: |
             type=semver,pattern={{version}},value=${{ inputs.version }}
             type=semver,pattern={{major}}.{{minor}},value=${{ inputs.version }}
