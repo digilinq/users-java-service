@@ -60,10 +60,6 @@ jobs:
           images: |
             ${{ env.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
           tags: |
-#            type=ref,event=branch
-#            type=ref,event=pr
-#            type=semver,pattern={{version}}
-#            type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{version}},value=${{ inputs.version }}
             type=semver,pattern={{major}}.{{minor}},value=${{ inputs.version }}
             type=semver,pattern={{major}},value=${{ inputs.version }}
