@@ -17,12 +17,9 @@ jobs:
           echo ${{ endsWith(github.event.base_ref, 'main') }}
   build:
     name: Build maven project
-#    if: endsWith(github.event.base_ref, 'main') == true
+    if: endsWith(github.event.base_ref, 'main') == true
     runs-on: ubuntu-latest
     steps:
-      - name: Exit if not on master branch
-        if: endsWith(github.event.base_ref, 'main') == false
-        run: exit -1
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up JDK 17
