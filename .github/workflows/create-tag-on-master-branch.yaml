@@ -4,9 +4,17 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 env:
-  REGISTRY: docker.io
+#  REGISTRY: docker.io
+  REGISTRY: digilinq
   IMAGE_NAME: users-microservice
 jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo ${{ github.event.base_ref }}
+          echo ${{ github.ref }}
+          echo ${{ endsWith(github.event.base_ref, 'main') }}
   build:
     name: Build maven project
     if: endsWith(github.event.base_ref, 'main') == true
@@ -56,8 +64,11 @@ jobs:
             type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
-      - name: Dump metadata
-        env:
-          META_OUTPUTS: ${{ toJson(steps.meta.outputs) }}
-        run: |
-          echo "$META_OUTPUTS"
+      - name: Build and push Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
