@@ -14,7 +14,7 @@ env:
 jobs:
   build:
     name: Build maven project
-    if: endsWith(github.event.base_ref, 'main') == true
+#    if: endsWith(github.event.base_ref, 'main') == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
