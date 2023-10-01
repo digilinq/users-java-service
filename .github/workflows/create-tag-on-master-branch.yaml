@@ -1,6 +1,10 @@
 name: Create tag on master branch
 on:
   push:
+    branches:
+      - 'master'
+      - 'main'
+      - 'feature/*'
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 env:
@@ -10,7 +14,7 @@ env:
 jobs:
   build:
     name: Build maven project
-#    if: endsWith(github.event.base_ref, 'main') == true
+    if: endsWith(github.event.base_ref, 'main') == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
