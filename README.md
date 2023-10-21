@@ -143,3 +143,6 @@ Pull request #25 opened
 ### Deploy to Kubernetes
 #### Create tag 
 
+#### Continuous deployment to Kubernetes with GitHub Actions
+[Continuous deployment to Kubernetes with GitHub Actions](https://nicwortel.nl/blog/2022/continuous-deployment-to-kubernetes-with-github-actions)
+
