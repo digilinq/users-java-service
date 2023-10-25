@@ -13,8 +13,8 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 env:
   REGISTRY: docker.io
-  DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-  IMAGE_NAME: users-microservice
+  USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  PACKAGE: users-microservice
 jobs:
   build:
     name: Build maven project
@@ -52,14 +52,14 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ env.USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ env.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
+            ${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.PACKAGE }}
           tags: |
             type=semver,pattern={{version}},value=${{ inputs.version }}
             type=semver,pattern={{major}}.{{minor}},value=${{ inputs.version }}
@@ -77,3 +77,22 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [create-docker-image]
+    steps:
+      - name: Set the Kubernetes context
+        uses: azure/k8s-set-context@v3
+        with:
+          method: service-account
+          k8s-url: ${{ secrets.KUBERNETES_URL }}
+          k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+      - name: Deploy to the Kubernetes cluster
+        uses: azure/k8s-deploy@v4
+        with:
+          namespace: default
+          manifests: |
+            manifests/deployment.yaml
+          images: |
+            ${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.PACKAGE }}:${{ github.sha }}
