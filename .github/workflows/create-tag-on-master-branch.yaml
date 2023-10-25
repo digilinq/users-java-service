@@ -93,6 +93,6 @@ jobs:
         with:
           namespace: default
           manifests: |
-            manifests/deployment.yaml
+            manifests/deployment.yml
           images: |
             ${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.PACKAGE }}:${{ github.sha }}
