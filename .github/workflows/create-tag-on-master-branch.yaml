@@ -15,6 +15,7 @@ env:
   REGISTRY: docker.io
   USERNAME: ${{ secrets.DOCKER_USERNAME }}
   PACKAGE: users-microservice
+  TAG: 1.0.20
 jobs:
   build:
     name: Build maven project
@@ -97,4 +98,4 @@ jobs:
           manifests: |
             manifests/deployment.yml
           images: |
-            ${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.PACKAGE }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.PACKAGE }}:${{ env.TAG }}
