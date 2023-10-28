@@ -7,6 +7,4 @@ on:
       - '!main'
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@v1
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@v1
