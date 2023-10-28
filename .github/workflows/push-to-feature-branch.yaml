@@ -1,0 +1,12 @@
+name: Build artifact and push
+on:
+  push:
+    branches:
+      - 'feature/*'
+      - '*'
+      - '!main'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: digilinq/reusable-workflows/blob/main/.github/workflows/build-maven-project.yaml@v1
