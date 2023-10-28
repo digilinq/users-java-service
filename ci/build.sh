@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 
-mvn package
+mvn --no-transfer-progress package
 
 
