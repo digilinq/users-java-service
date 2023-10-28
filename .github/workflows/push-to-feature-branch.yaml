@@ -9,4 +9,4 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: digilinq/reusable-workflows/blob/main/.github/workflows/build-maven-project.yaml@v1
+      - uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@v1
