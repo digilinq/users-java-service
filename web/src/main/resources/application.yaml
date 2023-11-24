@@ -5,15 +5,27 @@ logging:
 #    org.hibernate: DEBUG
 #    com.zaxxer.hikari.HikariConfig: DEBUG
 #    com.zaxxer.hikari: TRACE
+
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health,info,metric
+
+springdoc:
+  swagger-ui:
+    path: "/swagger-ui.html"
 ---
 spring:
   config:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:postgresql://localhost:5432/eightbits
-    username: eightbits
-    password: 123456
+    url: jdbc:postgresql://localhost:5432/tech-innovative
+    username: tech-innovative
+    password: tech-innovative
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
