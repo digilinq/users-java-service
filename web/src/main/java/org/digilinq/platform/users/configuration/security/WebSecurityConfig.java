@@ -34,7 +34,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
@@ -43,16 +43,5 @@ public class WebSecurityConfig {
                 .logout((logout) -> logout.permitAll());
 
         return http.build();
-    }
-
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring()
-                .requestMatchers(SWAGGER_UI_V2)
-                .requestMatchers(Swagger_UI_v3_OpenAPI)
-                .requestMatchers(H2_CONSOLE)
-                .requestMatchers("/v1/users")
-                .requestMatchers("/v1/users/**")
-                ;
     }
 }
