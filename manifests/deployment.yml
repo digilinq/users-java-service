@@ -1,9 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: users-ms
-  name: users-ms
+  name: users-microservice
 spec:
   replicas: 1
   selector:
