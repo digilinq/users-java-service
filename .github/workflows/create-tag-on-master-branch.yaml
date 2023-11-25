@@ -94,6 +94,6 @@ jobs:
           namespace: tech-innovative
           manifests: |
             manifests/deployment.yml
-            manifests/service.yaml
+#            manifests/service.yaml
           images: |
             ${{ needs.create-docker-image.outputs.docker-image }}
