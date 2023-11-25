@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: users-ms
+      app.kubernetes.io/name: users-ms
   template:
     metadata:
       labels:
-        app: users-ms
+        app.kubernetes.io/name: users-ms
     spec:
       containers:
         - name: users
