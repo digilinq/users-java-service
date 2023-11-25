@@ -11,7 +11,7 @@ spec:
       port: 80
       targetPort: 8080
     - name: management
-      port: 81
+      port: 8081
       protocol: TCP
-      targetPort: 8081
+      targetPort: management
   type: ClusterIP
