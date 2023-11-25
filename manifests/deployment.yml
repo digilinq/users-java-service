@@ -22,8 +22,8 @@ spec:
           image: docker.io/digilinq/users-microservice
           ports:
             - containerPort: 8080
-              name: service-endpoint
+              name: service
             - containerPort: 8081
-              name: service-management
+              name: management
           resources: {}
       restartPolicy: Always
