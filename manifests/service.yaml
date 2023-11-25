@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: users-ms
 spec:
   selector:
-    app: users-ms
+    app.kubernetes.io/name
   ports:
     - name: service
       protocol: TCP
