@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-ms
+  labels:
+    app.kubernetes.io/name: users-ms
+spec:
+  selector:
+    app: users-ms
+  ports:
+    - name: service
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+    - name: management
+      port: 81
+      protocol: TCP
+      targetPort: 8081
+  type: ClusterIP
