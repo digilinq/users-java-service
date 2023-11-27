@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: users-ms
+        app: users-ms
     spec:
       containers:
         - name: users
