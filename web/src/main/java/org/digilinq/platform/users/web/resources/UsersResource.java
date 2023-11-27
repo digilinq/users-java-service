@@ -1,5 +1,6 @@
 package org.digilinq.platform.users.web.resources;
 
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.digilinq.platform.users.api.UserService;
 import org.digilinq.platform.users.generated.v1.api.UsersApi;
@@ -36,6 +37,7 @@ public class UsersResource implements UsersApi {
     }
 
     @Override
+    @Timed(value = "get.all.time", description = "Time taken to return all users")
     public ResponseEntity<List<UserAccount>> findUsers(String username, String email) {
         logger.info("Getting all users");
         return ResponseEntity.ok().build();
