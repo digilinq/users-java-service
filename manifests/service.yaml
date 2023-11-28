@@ -8,8 +8,8 @@ spec:
   ports:
     - name: service
       protocol: TCP
-      port: 80
-      targetPort: 8080
+      port: 8080
+      targetPort: service
     - name: management
       port: 8081
       protocol: TCP
