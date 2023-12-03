@@ -15,10 +15,13 @@ spec:
     spec:
       containers:
         - name: users
+          image: docker.io/digilinq/users-microservice
           env:
             - name: APP_VERSION
               value: "1.0.0"
-          image: docker.io/digilinq/users-microservice
+          envFrom:
+            - configMapRef:
+                name: users-config
           ports:
             - containerPort: 8080
               name: service
