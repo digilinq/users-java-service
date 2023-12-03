@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @SequenceGenerator(name = "USER_SEQUENCE_GENERATOR", sequenceName = "USER_SEQ")
-@Table(schema = "e_users", name = "security_users")
+@Table(name = "security_users")
 public class UserEntity {
 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQUENCE_GENERATOR")
