@@ -3,6 +3,7 @@ package org.digilinq.platform.users.web.resources;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.digilinq.platform.users.api.UserService;
+import org.digilinq.platform.users.dto.User;
 import org.digilinq.platform.users.generated.v1.api.UsersApi;
 import org.digilinq.platform.users.generated.v1.model.CreateUserRequest;
 import org.digilinq.platform.users.generated.v1.model.CreateUserResponse;
@@ -51,7 +52,8 @@ public class UsersResource implements UsersApi {
     @Override
     public ResponseEntity<CreateUserResponse> saveUser(CreateUserRequest createUserRequest) {
         var user = registerUserMapper.map(createUserRequest);
+        User savedUser = service.saveUser(user);
         URI location = URI.create(String.format("/users/%s", user.id()));
-        return ResponseEntity.created(location).body(registerUserMapper.map(user));
+        return ResponseEntity.created(location).body(registerUserMapper.map(savedUser));
     }
 }
