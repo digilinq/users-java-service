@@ -53,7 +53,7 @@ public class UsersResource implements UsersApi {
     public ResponseEntity<CreateUserResponse> saveUser(CreateUserRequest createUserRequest) {
         var user = registerUserMapper.map(createUserRequest);
         User savedUser = service.saveUser(user);
-        URI location = URI.create(String.format("/users/%s", user.id()));
+        URI location = URI.create(String.format("/users/%s", user.userId()));
         return ResponseEntity.created(location).body(registerUserMapper.map(savedUser));
     }
 }
