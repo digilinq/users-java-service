@@ -41,6 +41,9 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
 eureka:
+  instance:
+    hostname: users
+    non-secure-port: 8080
   client:
     service-url:
       defaultZone: http://eureka-discovery-service:8761/eureka/
