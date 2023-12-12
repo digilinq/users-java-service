@@ -1,6 +1,6 @@
 logging:
   level:
-    root: DEBUG
+    root: INFO
     org.springframework.web: INFO
     org.hibernate: DEBUG
     com.zaxxer.hikari.HikariConfig: DEBUG
