@@ -1,10 +1,11 @@
 logging:
   level:
-    root: DEBUG
+    root: INFO
     org.springframework.web: INFO
     org.hibernate: DEBUG
     com.zaxxer.hikari.HikariConfig: DEBUG
     com.zaxxer.hikari: TRACE
+
 
 management:
   server:
@@ -16,6 +17,11 @@ management:
 springdoc:
   swagger-ui:
     path: "/swagger-ui.html"
+
+spring:
+  application:
+    name: users
+
 ---
 spring:
   config:
@@ -34,6 +40,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+eureka:
+  instance:
+    hostname: users
+    non-secure-port: 8080
+  client:
+    service-url:
+      defaultZone: http://eureka-discovery-service:8761/eureka/
 ---
 spring:
   config:
