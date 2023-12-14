@@ -4,7 +4,6 @@ metadata:
   name: users
   labels:
     svc: users
-    tier: backend
 spec:
   type: ClusterIP
   selector:
