@@ -4,7 +4,6 @@ metadata:
   name: users-monitor
   labels:
     app: users
-  namespace: default
 spec:
   endpoints:
   - interval: 10s
