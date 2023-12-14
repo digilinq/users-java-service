@@ -95,7 +95,6 @@ jobs:
           manifests: |
             manifests/deployment.yml
             manifests/service.yaml
-            manifests/servicemonitor.yaml
           images: |
             ${{ needs.create-docker-image.outputs.docker-image }}
       - name: Deploy to the Kubernetes cluster
