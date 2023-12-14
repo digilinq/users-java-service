@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: users-monitor
+  labels:
+    app: users
+  namespace: default
+spec:
+  endpoints:
+  - interval: 10s
+    path: /actuator/prometheus
+    port: management
+  namespaceSelector:
+    matchNames:
+      - "tech-innovative"
+  selector:
+    matchLabels:
+      svc: users

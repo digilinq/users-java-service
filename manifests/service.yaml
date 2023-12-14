@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: users
   labels:
-    tier: backend
+    svc: users
 spec:
   type: ClusterIP
   selector:
