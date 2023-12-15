@@ -13,6 +13,7 @@ management:
   metrics:
     enable:
       jvm: false
+      hikaricp: false
   endpoints:
     web:
       exposure:
