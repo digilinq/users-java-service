@@ -12,7 +12,7 @@ management:
     port: 8081
   metrics:
     enable:
-      all: false
+#      all: false
       jvm: true
       hikaricp: false
       tomcat: false
