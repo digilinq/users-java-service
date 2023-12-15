@@ -19,7 +19,7 @@ management:
       system: false
       executor: false
       logback: false
-
+      spring: false
   endpoints:
     web:
       exposure:
