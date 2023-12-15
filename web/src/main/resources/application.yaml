@@ -17,6 +17,9 @@ management:
       tomcat: false
       jdbc: false
       system: false
+      executor: false
+      logback: false
+
   endpoints:
     web:
       exposure:
