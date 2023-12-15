@@ -13,7 +13,7 @@ management:
   metrics:
     enable:
       all: false
-      jvm: false
+      jvm: true
       hikaricp: false
       tomcat: false
       jdbc: false
