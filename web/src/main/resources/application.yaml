@@ -10,10 +10,13 @@ logging:
 management:
   server:
     port: 8081
+  metrics:
+    enable:
+      jvm: false
   endpoints:
     web:
       exposure:
-        include: prometheus,health,info
+        include: prometheus,health,info,metric
 springdoc:
   swagger-ui:
     path: "/swagger-ui.html"
