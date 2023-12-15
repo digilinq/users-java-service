@@ -14,6 +14,9 @@ management:
     enable:
       jvm: false
       hikaricp: false
+      tomcat: false
+      jdbc: false
+      system: false
   endpoints:
     web:
       exposure:
