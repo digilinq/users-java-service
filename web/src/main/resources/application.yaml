@@ -22,9 +22,13 @@ management:
       logback: false
       spring: false
   endpoints:
+    enabled-by-default: true
     web:
       exposure:
         include: prometheus,health,info,metric
+  endpoint:
+    health:
+      show-details: always
 springdoc:
   swagger-ui:
     path: "/swagger-ui.html"

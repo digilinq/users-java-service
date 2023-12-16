@@ -10,21 +10,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        RegisterUserMapperImpl.class, EncryptedPasswordMapper.class, BCryptPasswordEncoder.class
+        UserMapperImpl.class, EncryptedPasswordMapper.class, BCryptPasswordEncoder.class
 })
-class RegisterUserMapperTest {
-
+class UserMapperTest {
     public static final String EMAIL = "hossein.mohammadi@outlook.com";
     public static final String PASSWORD = "123456";
     public static final String CONFIRM_PASSWORD = "123456";
     @Autowired
-    private RegisterUserMapper mapper;
+    private UserMapper mapper;
 
     @Autowired
     PasswordEncoder passwordEncoder;
