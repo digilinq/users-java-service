@@ -10,10 +10,25 @@ logging:
 management:
   server:
     port: 8081
+  metrics:
+    enable:
+#      all: false
+      jvm: true
+      hikaricp: false
+      tomcat: false
+      jdbc: false
+      system: false
+      executor: false
+      logback: false
+      spring: false
   endpoints:
+    enabled-by-default: true
     web:
       exposure:
         include: prometheus,health,info,metric
+  endpoint:
+    health:
+      show-details: always
 springdoc:
   swagger-ui:
     path: "/swagger-ui.html"

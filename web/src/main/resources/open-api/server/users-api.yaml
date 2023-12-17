@@ -23,6 +23,8 @@ paths:
           schema:
             type: string
             format: email
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
       responses:
         200:
           description: A list of users is populated
@@ -102,6 +104,28 @@ paths:
         422:
           description: User is disabled or not activated
 components:
+  parameters:
+    pageParam:
+      name: page
+      in: query
+      description: The page to be returned
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 1
+    sizeParam:
+      name: size
+      in: query
+      description: The number of items to be returned
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 20
+        maximum: 100
   schemas:
     UserAccount:
       type: object
