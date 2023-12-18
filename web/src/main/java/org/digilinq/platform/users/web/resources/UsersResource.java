@@ -38,7 +38,7 @@ public class UsersResource implements UsersApi {
     @Override
     public ResponseEntity<UserAccount> findUser(String userId) {
         logger.info("Find user by id {}", userId);
-        var user = service.findUserById(Long.valueOf(userId));
+        var user = service.findUserById(UUID.fromString(userId));
         return ResponseEntity.ok(mapper.map(user));
     }
 

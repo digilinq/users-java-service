@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -19,7 +21,7 @@ public class UserServiceImpl implements UserService {
     private final UserEntityMapper mapper;
 
     @Override
-    public User findUserById(Long userId) {
+    public User findUserById(UUID userId) {
         return repository.findById(userId).map(mapper::map).orElseThrow(UserNotFoundException::new);
     }
 
