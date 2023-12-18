@@ -2,6 +2,7 @@ package org.digilinq.platform.users.web.resources;
 
 import org.digilinq.platform.users.api.UserService;
 import org.digilinq.platform.users.configuration.LoggingConfiguration;
+import org.digilinq.platform.users.configuration.Metrics;
 import org.digilinq.platform.users.configuration.security.WebSecurityConfig;
 import org.digilinq.platform.users.web.mapping.EncryptedPasswordMapper;
 import org.digilinq.platform.users.web.mapping.UserMapperImpl;
@@ -24,7 +25,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest
-@Import({UserMapperImpl.class, EncryptedPasswordMapper.class, LoggingConfiguration.class, WebSecurityConfig.class})
+@Import({
+        UserMapperImpl.class, EncryptedPasswordMapper.class,
+        LoggingConfiguration.class, WebSecurityConfig.class
+})
 class UsersResourceTest {
 
 
@@ -33,6 +37,9 @@ class UsersResourceTest {
 
     @MockBean
     private UserService userService;
+
+    @MockBean
+    private Metrics metrics;
 
     @Test
     @WithMockUser
