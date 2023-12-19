@@ -21,4 +21,5 @@ public class UserEntity {
     private String email;
     private String username;
     private String encryptedPassword;
+    private boolean activated;
 }

@@ -11,4 +11,5 @@ public class UserEntity_ {
     public static volatile SingularAttribute<UserEntity, String> username;
     public static volatile SingularAttribute<UserEntity, String> encryptedPassword;
     public static volatile SingularAttribute<UserEntity, String> email;
+    public static volatile SingularAttribute<UserEntity, Boolean> activated;
 }
