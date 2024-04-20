@@ -7,7 +7,12 @@ import org.digilinq.platform.users.exceptions.UserNotFoundException;
 import org.digilinq.platform.users.mapping.UserEntityMapper;
 import org.digilinq.platform.users.repository.UserRepository;
 import org.digilinq.platform.users.util.With;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -16,8 +21,14 @@ public class UserServiceImpl implements UserService {
     private final UserEntityMapper mapper;
 
     @Override
-    public User findUserById(Long userId) {
+    public User findUserById(UUID userId) {
         return repository.findById(userId).map(mapper::map).orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
+    public Page<User> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repository.findAll(pageable).map(mapper::map);
     }
 
     @Override

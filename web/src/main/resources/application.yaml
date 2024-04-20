@@ -1,19 +1,76 @@
 logging:
   level:
     root: INFO
-#    org.springframework.web: INFO
-#    org.hibernate: DEBUG
-#    com.zaxxer.hikari.HikariConfig: DEBUG
-#    com.zaxxer.hikari: TRACE
+    org.springframework.web: INFO
+    org.hibernate: DEBUG
+    com.zaxxer.hikari.HikariConfig: DEBUG
+    com.zaxxer.hikari: TRACE
+
+
+management:
+  server:
+    port: 8081
+  metrics:
+    enable:
+#      all: false
+      jvm: true
+      hikaricp: false
+      tomcat: false
+      jdbc: false
+      system: false
+      executor: false
+      logback: false
+      spring: false
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: prometheus,health,info,metric
+  endpoint:
+    health:
+      show-details: always
+springdoc:
+  swagger-ui:
+    path: "/swagger-ui.html"
+
+spring:
+  application:
+    name: users
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prd
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}?currentSchema=users
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+eureka:
+  instance:
+    hostname: users
+    non-secure-port: 8080
+  client:
+    service-url:
+      defaultZone: http://eureka-discovery-service:8761/eureka/
 ---
 spring:
   config:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:postgresql://localhost:5432/eightbits
-    username: eightbits
-    password: 123456
+    url: jdbc:postgresql://localhost:5432/infinite-tech?currentSchema=users
+    username: infinite-tech
+    password: NPXkk0xUTJCfnrAR
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
@@ -21,6 +78,7 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
 ---
 spring:
@@ -32,4 +90,12 @@ spring:
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
 ---
