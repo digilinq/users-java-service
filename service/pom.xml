@@ -24,5 +24,11 @@
             <artifactId>users-repository</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.eightbits.shared</groupId>
+            <artifactId>stdlib</artifactId>
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
 </project>
