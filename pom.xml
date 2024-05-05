@@ -102,6 +102,12 @@
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.eightbits.shared</groupId>
+                <artifactId>stdlib</artifactId>
+                <version>1.0.3-SNAPSHOT</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
