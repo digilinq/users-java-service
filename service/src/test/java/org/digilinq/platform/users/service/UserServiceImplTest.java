@@ -7,8 +7,7 @@ import org.digilinq.platform.users.to.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.UUID;
@@ -23,10 +22,14 @@ class UserServiceImplTest {
     private static final String EMAIL = "someone@example.com";
     private static final String ENCRYPTED_PASSWORD = "$2a$08$8hrBAYsewyjE9byRe7jAwuQfASi2ujNrFgjF1QHJ9wPJHTiHmRqb.";
 
-    private UserRepository userRepository = Mockito.mock(UserRepository.class);
+    @Mock
+    private UserRepository userRepository;
+
+    @Spy
     private UserEntityMapper mapper = Mappers.getMapper(UserEntityMapper.class);
 
-    private UserServiceImpl userService = new UserServiceImpl(userRepository, mapper);
+    @InjectMocks
+    private UserServiceImpl userService;
 
     @Test
     void should_call_user_repository_with_correct_parameters_and_return_user_with_id() {
