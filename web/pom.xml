@@ -107,6 +107,11 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${springdoc.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.eightbits.shared</groupId>
+            <artifactId>stdlib</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

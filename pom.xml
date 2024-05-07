@@ -63,6 +63,24 @@
         <module>service</module>
     </modules>
 
+    <profiles>
+        <profile>
+            <id>github</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>github</id>
+                    <url>https://maven.pkg.github.com/digilinq/stdlib</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -84,6 +102,12 @@
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.eightbits.shared</groupId>
+                <artifactId>stdlib</artifactId>
+                <version>1.0.3-SNAPSHOT</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

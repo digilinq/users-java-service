@@ -1,12 +1,12 @@
 package org.digilinq.platform.users.service;
 
+import com.eightbits.shared.stdlib.streams.With;
 import lombok.RequiredArgsConstructor;
 import org.digilinq.platform.users.api.UserService;
 import org.digilinq.platform.users.dto.User;
 import org.digilinq.platform.users.exceptions.UserNotFoundException;
 import org.digilinq.platform.users.mapping.UserEntityMapper;
 import org.digilinq.platform.users.repository.UserRepository;
-import org.digilinq.platform.users.util.With;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
