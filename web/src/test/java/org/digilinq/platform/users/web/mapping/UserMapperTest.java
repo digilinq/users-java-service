@@ -2,6 +2,7 @@ package org.digilinq.platform.users.web.mapping;
 
 import org.digilinq.platform.users.dto.User;
 import org.digilinq.platform.users.generated.v1.model.CreateUserRequest;
+import org.digilinq.platform.users.generated.v1.model.SignupRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ class UserMapperTest {
     public static final String EMAIL = "hossein.mohammadi@outlook.com";
     public static final String PASSWORD = "123456";
     public static final String CONFIRM_PASSWORD = "123456";
+
     @Autowired
     private UserMapper mapper;
 
@@ -31,6 +33,18 @@ class UserMapperTest {
         CreateUserRequest createUserRequest = new CreateUserRequest(
                 EMAIL, PASSWORD, CONFIRM_PASSWORD);
         User user = mapper.map(createUserRequest);
+        assertEquals(EMAIL, user.email());
+        assertEquals(EMAIL, user.username());
+        assertTrue(passwordEncoder.matches(PASSWORD, user.encryptedPassword()));
+    }
+
+    @Test
+    void should_map_signup_request_to_user_dto() {
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setEmail(EMAIL);
+        signupRequest.setPassword(PASSWORD);
+        signupRequest.setConfirmPassword(CONFIRM_PASSWORD);
+        User user = mapper.map(signupRequest);
         assertEquals(EMAIL, user.email());
         assertEquals(EMAIL, user.username());
         assertTrue(passwordEncoder.matches(PASSWORD, user.encryptedPassword()));
