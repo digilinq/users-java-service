@@ -1,27 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: users-microservice
-  name: users-microservice
+  name: users
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: users-microservice
+      app.kubernetes.io/name: users
   template:
     metadata:
       labels:
-        app: users-microservice
+        app.kubernetes.io/name: users
+        app: users
     spec:
       containers:
         - name: users
+          image: docker.io/digilinq/users-microservice
           env:
             - name: APP_VERSION
               value: "1.0.0"
-          image: docker.io/digilinq/users-microservice:2.0.0
+          envFrom:
+            - configMapRef:
+                name: users-config
           ports:
             - containerPort: 8080
-          resources: {}
-      restartPolicy: Always
-status: {}
+              name: service
+            - containerPort: 8081
+              name: management
