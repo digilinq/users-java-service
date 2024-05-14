@@ -8,10 +8,12 @@ on:
       - '!main'
 jobs:
   build:
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@v1
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@v2
     with:
       runner: ubuntu-latest
       java-version: 17
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   maven-build:
     name: Build with Maven
