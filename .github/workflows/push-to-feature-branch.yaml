@@ -11,8 +11,6 @@ jobs:
     with:
       runner: ubuntu-latest
       java-version: 17
-#    secrets:
-#      GITHUB_TOKEN_1: ${{ secrets.GITHUB_TOKEN }}
 
   maven-build:
     name: Build with Maven
