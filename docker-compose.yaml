@@ -10,7 +10,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
-      - digilinq-network
+      - tech-innovative-network
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       POSTGRES_HOST: ${POSTGRES_HOST}
@@ -21,6 +21,6 @@ services:
     ports:
       - "8080:8080"
 networks:
-  digilinq-network:
-    name: digilinq
+  tech-innovative-network:
+    name: tech-innovative
     external: true
