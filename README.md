@@ -1,4 +1,9 @@
-mvn spring-boot:run -Dspring-boot.run.profiles=dev
+# Users Microservice
+
+## Run application locally
+```shell
+mvn spring-boot:run -Dspring-boot.run.profiles=local
+```
 
 java -jar -Dspring.profiles.active=dev XXX.jar
 

@@ -124,7 +124,10 @@ public class MockData {
     }
 
     public enum SignupRequestExamples implements TypeResource<SignupRequest> {
-        SIGNUP_REQUEST("mock-data/signup-request.json");
+        SIGNUP_REQUEST("mock-data/signup-request.json"),
+        SIGNUP_REQUEST_WITH_EMPTY_EMAIL("mock-data/signup-request-empty-email.json"),
+        SIGNUP_REQUEST_WITH_EMPTY_PASSWORD("mock-data/signup-request-empty-password.json"),
+        ;
 
         private final String resourceName;
 
