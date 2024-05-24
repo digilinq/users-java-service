@@ -1,4 +1,4 @@
 {
   "password": "password",
-  "passwordConfirmation": "password"
+  "confirmPassword": "password"
 }

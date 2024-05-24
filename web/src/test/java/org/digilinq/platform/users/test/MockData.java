@@ -127,6 +127,7 @@ public class MockData {
         SIGNUP_REQUEST("mock-data/signup-request.json"),
         SIGNUP_REQUEST_WITH_EMPTY_EMAIL("mock-data/signup-request-empty-email.json"),
         SIGNUP_REQUEST_WITH_EMPTY_PASSWORD("mock-data/signup-request-empty-password.json"),
+        SIGNUP_REQUEST_AND_PASSWORD_NOT_MATCH("mock-data/signup-request-password-not-match.json"),
         ;
 
         private final String resourceName;

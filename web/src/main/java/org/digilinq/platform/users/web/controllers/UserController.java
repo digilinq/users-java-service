@@ -3,6 +3,7 @@ package org.digilinq.platform.users.web.controllers;
 import com.eightbits.shared.stdlib.command.CommandBuilder;
 import org.digilinq.platform.users.api.UserService;
 import org.digilinq.platform.users.dto.User;
+import org.digilinq.platform.users.exceptions.PasswordNotMatchException;
 import org.digilinq.platform.users.generated.v1.api.SignupApi;
 import org.digilinq.platform.users.generated.v1.model.SignupRequest;
 import org.digilinq.platform.users.web.mapping.UserMapper;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 @RestController
@@ -33,6 +35,9 @@ public class UserController implements SignupApi {
                 .compose((Function<SignupRequest, User>) mapper::map)
                 .andThen(mapper::mapToURI)
                 .andThen(ResponseEntity::created);
+
+        if (!Objects.equals(signupRequest.getPassword(), signupRequest.getConfirmPassword()))
+            throw new PasswordNotMatchException("Password not match");
 
         return signupCommand.execute(signupRequest).build();
     }

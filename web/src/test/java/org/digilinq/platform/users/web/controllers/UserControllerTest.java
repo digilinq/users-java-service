@@ -55,4 +55,13 @@ class UserControllerTest {
                 ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    void should_reject_with_bad_request_when_password_not_match_confirm_password() throws Exception {
+        mockMvc.perform(post(SIGNUP_ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(MockData.SignupRequestExamples.SIGNUP_REQUEST_AND_PASSWORD_NOT_MATCH.jsonString())
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest());
+    }
 }
