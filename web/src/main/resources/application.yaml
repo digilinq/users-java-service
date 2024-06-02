@@ -50,7 +50,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -68,8 +68,8 @@ spring:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:postgresql://localhost:5432/infinite-tech?currentSchema=users
-    username: infinite-tech
+    url: jdbc:postgresql://localhost:5432/infinite_tech?currentSchema=users
+    username: infinite_tech
     password: NPXkk0xUTJCfnrAR
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -80,6 +80,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+eureka:
+  client:
+    enabled: false
 ---
 spring:
   config:

@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @SequenceGenerator(name = "SEQUENCE_GENERATOR", sequenceName = "VERIFICATION_TOKEN_SEQ")
 @Entity
 public class VerificationTokenEntity {

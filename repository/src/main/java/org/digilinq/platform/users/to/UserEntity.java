@@ -1,6 +1,7 @@
 package org.digilinq.platform.users.to;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.UUID;
@@ -18,7 +19,11 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Id
     private UUID id;
+
+    @NotNull
+    @Column(nullable = false)
     private String email;
     private String username;
     private String encryptedPassword;
+    private Boolean activated;
 }
