@@ -16,6 +16,8 @@ jobs:
     name: Build maven project
 #    if: endsWith(github.event.base_ref, 'main') == true
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
