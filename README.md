@@ -138,7 +138,6 @@ Pull request #25 opened
   "ref_type": "tag"
 }
 ```
-#### Create release
 
 ### Create Docker Image
 
