@@ -4,13 +4,15 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import org.digilinq.platform.users.to.UserEntity;
 import org.digilinq.platform.users.to.VerificationTokenEntity;
-import org.hibernate.PropertyValueException;
 import org.hibernate.TransientPropertyValueException;
-import org.junit.jupiter.api.*;
+import org.hibernate.exception.ConstraintViolationException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 class VerificationTokenRepositoryTest {
@@ -23,13 +25,13 @@ class VerificationTokenRepositoryTest {
     @Autowired
     private EntityManager em;
 
+
     @Test
     void when_save_verification_token_with_empty_user_should_throw_exception() {
         VerificationTokenEntity verificationToken = VerificationTokenEntity.builder().build();
+        em.persist(verificationToken);
 
-        Assertions.assertThrows(PropertyValueException.class,
-                () -> em.persist(verificationToken)
-        );
+        Assertions.assertThrows(ConstraintViolationException.class, () -> em.flush());
     }
 
     @Test

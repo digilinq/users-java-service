@@ -23,8 +23,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 class UserRepositoryTest {
 
-    public static final String USERNAME = "someone@domain.org";
-    public static final String EMAIL = "someone@domain.org";
+    public static final String USERNAME = "john.doe@example.com";
+    public static final String USERNAME_2 = "emma.brown@demoemail.com";
+    public static final String EMAIL = "john.doe@example.com";
+    public static final String EMAIL_2 = "emma.brown@demoemail.com";
+
+
     public static final String ENCRYPTED_PASSWORD = "$2a$10$TQ30tl1iFnMLQfSx6fou3.rHdOHb8/mwEKzW7Bv/bfI9PkWlgn1eC";
 
 
@@ -73,9 +77,11 @@ class UserRepositoryTest {
     }
 
     @Test
-    void usernameIsUnique() {
-        UserEntity user1 = UserEntity.builder().username(USERNAME).build();
-        UserEntity user2 = UserEntity.builder().username(USERNAME).build();
+    void username_is_unique_at_database_level() {
+        UserEntity user1 = UserEntity.builder().username(USERNAME)
+                .email(EMAIL).build();
+        UserEntity user2 = UserEntity.builder().username(USERNAME)
+                .email(EMAIL_2).build();
         repository.save(user1);
         repository.save(user2);
 
@@ -84,8 +90,10 @@ class UserRepositoryTest {
 
     @Test
     void itIsPossibleToSaveToUserWithEmptyUsername() {
-        UserEntity user1 = UserEntity.builder().build();
-        UserEntity user2 = UserEntity.builder().build();
+        UserEntity user1 = UserEntity.builder()
+                .email(EMAIL).build();
+        UserEntity user2 = UserEntity.builder()
+                .email(EMAIL_2).build();
         repository.save(user1);
         repository.save(user2);
         assertDoesNotThrow(() -> repository.flush());
@@ -93,7 +101,7 @@ class UserRepositoryTest {
 
     @Test
     void searchByEmailShouldNotCaseSensitive() {
-        UserEntity user=UserEntity.builder().email(EMAIL).build();
+        UserEntity user = UserEntity.builder().email(EMAIL).build();
         repository.save(user);
         // repository.flush();
         assertThat(repository.findAll(UserSpecification.emailEqualsIgnoreCase(
