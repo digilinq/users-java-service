@@ -31,3 +31,10 @@ logging:
 eureka:
   client:
     enabled: false
+
+mail:
+  smtp:
+    host: smtp-domain
+    port: 587
+    username: smtp-user
+    password: smtp-password
