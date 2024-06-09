@@ -1,14 +1,43 @@
 openapi: 3.0.3
 info:
   title: User microservice
-  version: 1.0.7
+  version: 1.0.9
 paths:
+  /signup:
+    post:
+      tags:
+        - signup
+      summary: Sign up a user
+      description: >-
+        Register a new user with an inactive status, create a deeplink to activate the 
+        user by calling the deeplink
+      operationId: signup
+      security: []
+      requestBody:
+        description: minimum required information to create a new user with status `inactive`
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+            examples:
+              signup:
+                $ref: '#/components/examples/SignupRequestExample'
+      responses:
+        '201':
+          description: >-
+            User account is created with inactive status, user should activate the account 
+            by clicking on the deeplink which will be sent via the email
+        '400':
+          description: Bad request, invalid input or passwords do not match
   /users:
     get:
       tags:
         - users
       description: Return list of users based on given parameters
       operationId: findUsers
+      security:
+        - BearerAuth: []
       parameters:
         - in: query
           name: username
@@ -23,6 +52,8 @@ paths:
           schema:
             type: string
             format: email
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
       responses:
         200:
           description: A list of users is populated
@@ -37,6 +68,8 @@ paths:
         - users
       description: Save a new user into database
       operationId: saveUser
+      security:
+        - BearerAuth: []
       requestBody:
         content:
           application/json:
@@ -55,6 +88,8 @@ paths:
         - users
       description: Return the User based on given userId, username or email
       operationId: findUser
+      security:
+        - BearerAuth: []
       parameters:
         - in: path
           name: userId
@@ -79,6 +114,8 @@ paths:
         - users
       description: Return credentials by given userId
       operationId: getUserCredentials
+      security:
+        - BearerAuth: []
       parameters:
         - in: path
           name: userId
@@ -102,6 +139,28 @@ paths:
         422:
           description: User is disabled or not activated
 components:
+  parameters:
+    pageParam:
+      name: page
+      in: query
+      description: The page to be returned
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 1
+    sizeParam:
+      name: size
+      in: query
+      description: The number of items to be returned
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 20
+        maximum: 100
   schemas:
     UserAccount:
       type: object
@@ -147,6 +206,36 @@ components:
           type: string
         password:
           type: string
+    SignupRequest:
+      type: object
+      required:
+        - email
+        - password
+        - confirmPassword
+      properties:
+        email:
+          type: string
+          format: email
+          description: Username is same as the user's email
+        password:
+          type: string
+          description: User's password
+          minLength: 8
+        confirmPassword:
+          type: string
+          description: Confirm password to match with password
+  examples:
+    SignupRequestExample:
+      value:
+        email: user1@example.com
+        password: P@ssw0rd
+        confirmPassword: P@ssw0rd
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
 tags:
   - name: users
     description: Users microservice
+  - name: signup
+    description: Sign up a user

@@ -1,4 +1,9 @@
-mvn spring-boot:run -Dspring-boot.run.profiles=dev
+# Users Microservice
+
+## Run application locally
+```shell
+mvn spring-boot:run -Dspring-boot.run.profiles=local
+```
 
 java -jar -Dspring.profiles.active=dev XXX.jar
 
@@ -133,7 +138,6 @@ Pull request #25 opened
   "ref_type": "tag"
 }
 ```
-#### Create release
 
 ### Create Docker Image
 
@@ -142,4 +146,7 @@ Pull request #25 opened
 
 ### Deploy to Kubernetes
 #### Create tag 
+
+#### Continuous deployment to Kubernetes with GitHub Actions
+[Continuous deployment to Kubernetes with GitHub Actions](https://nicwortel.nl/blog/2022/continuous-deployment-to-kubernetes-with-github-actions)
 

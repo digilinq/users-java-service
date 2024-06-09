@@ -1,27 +1,42 @@
 logging:
   level:
     root: INFO
-#    org.springframework.web: INFO
-#    org.hibernate: DEBUG
-#    com.zaxxer.hikari.HikariConfig: DEBUG
-#    com.zaxxer.hikari: TRACE
----
+    org.springframework.web: INFO
+    org.hibernate: DEBUG
+    com.zaxxer.hikari.HikariConfig: DEBUG
+    com.zaxxer.hikari: TRACE
+
+management:
+  server:
+    port: 8081
+  metrics:
+    enable:
+#      all: false
+      jvm: true
+      hikaricp: false
+      tomcat: false
+      jdbc: false
+      system: false
+      executor: false
+      logback: false
+      spring: false
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: prometheus,health,info,metric
+  endpoint:
+    health:
+      show-details: always
+springdoc:
+  swagger-ui:
+    path: "/swagger-ui.html"
+
 spring:
-  config:
-    activate:
-      on-profile: local
-  datasource:
-    url: jdbc:postgresql://localhost:5432/eightbits
-    username: eightbits
-    password: 123456
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate:
-        format_sql: true
+  application:
+    name: users
+...
+# Docker
 ---
 spring:
   config:
@@ -32,4 +47,12 @@ spring:
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
----
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+...

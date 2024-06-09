@@ -1,10 +1,12 @@
 package org.digilinq.platform.users.dto;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public record User(
-        Long id,
+        UUID userId,
         String username,
-        String password
+        String encryptedPassword,
+        String email
 ) implements Serializable {
 }

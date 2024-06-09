@@ -1,19 +1,29 @@
 package org.digilinq.platform.users.to;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import java.util.UUID;
 
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@SequenceGenerator(name = "USER_SEQUENCE_GENERATOR", sequenceName = "USER_SEQ")
-@Table(schema = "e_users", name = "security_users")
+@Table(name = "security_users", uniqueConstraints = {
+        @UniqueConstraint(name = "UQ_USERS_USERNAME", columnNames = {"username"}),
+        @UniqueConstraint(name = "UQ_USERS_EMAIL", columnNames = {"email"}),
+})
 public class UserEntity {
-
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQUENCE_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Id
-    private Long id;
+    private UUID id;
+
+    @NotNull
+    @Column(nullable = false)
+    private String email;
     private String username;
     private String encryptedPassword;
+    private Boolean activated;
 }

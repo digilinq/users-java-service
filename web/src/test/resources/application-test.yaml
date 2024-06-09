@@ -12,9 +12,29 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+# Server
+#server:
+#  port: 18080
+#  servlet:
+#    context-path: /api
+
+# logging
 logging:
   level:
     root: INFO
     org.springframework.web: DEBUG
     org.hibernate.sql: INFO
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# Eureka
+eureka:
+  client:
+    enabled: false
+
+mail:
+  smtp:
+    host: smtp-domain
+    port: 587
+    username: smtp-user
+    password: smtp-password
