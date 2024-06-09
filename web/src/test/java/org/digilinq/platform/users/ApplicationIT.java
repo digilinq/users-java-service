@@ -4,7 +4,7 @@ import org.digilinq.platform.users.integration.IntegrationTest;
 import org.junit.jupiter.api.Test;
 
 @IntegrationTest
-class ApplicationTest {
+class ApplicationIT {
     @Test
     void contextLoads() {
     }

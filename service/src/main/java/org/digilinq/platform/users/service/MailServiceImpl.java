@@ -18,7 +18,7 @@ import java.util.Calendar;
 public class MailServiceImpl implements MailService {
 
     private final JavaMailSender mailSender;
-    private Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
 
     public MailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
