@@ -54,7 +54,61 @@
 
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok.version>1.18.28</lombok.version>
+
+        <testGroups>IntegrationTests</testGroups>
+        <skipTests>false</skipTests>
+        <skipITs>false</skipITs>
     </properties>
+
+    <!--
+    <profiles>
+        <profile>
+            <id>component</id>
+            <properties>
+                <skipTests>true</skipTests>
+                <skipITs>false</skipITs>
+                <testGroups>ComponentTests</testGroups>
+                <stage>component</stage>
+            </properties>
+        </profile>
+        <profile>
+            <id>contract</id>
+            <properties>
+                <skipTests>true</skipTests>
+                <skipITs>false</skipITs>
+                <testGroups>ContractTests</testGroups>
+                <stage>contract</stage>
+            </properties>
+        </profile>
+        <profile>
+            <id>integration</id>
+            <properties>
+                <skipTests>true</skipTests>
+                <skipITs>false</skipITs>
+                <testGroups>IntegrationTests</testGroups>
+                <stage>integration</stage>
+            </properties>
+        </profile>
+        <profile>
+            <id>load</id>
+            <properties>
+                <skipTests>true</skipTests>
+                <skipITs>false</skipITs>
+                <testGroups>LoadTests</testGroups>
+                <stage>load</stage>
+            </properties>
+        </profile>
+        <profile>
+            <id>e2e</id>
+            <properties>
+                <skipTests>true</skipTests>
+                <skipITs>false</skipITs>
+                <testGroups>E2ETests</testGroups>
+                <stage>e2e</stage>
+            </properties>
+        </profile>
+    </profiles>
+    -->
 
     <modules>
         <module>api</module>
@@ -150,10 +204,20 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <skipTests>${skipTests}</skipTests>
+                        <useSystemClassLoader>false</useSystemClassLoader>
+                        <perCoreThreadCount>false</perCoreThreadCount>
+                        <forkCount>1</forkCount>
+                        <reuseForks>true</reuseForks>
+                        <threadCount>8</threadCount>
+                        <runOrder>random</runOrder>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${maven-failsafe-plugin.version}</version>
                     <executions>
                         <execution>
                             <goals>
@@ -164,6 +228,20 @@
                     </executions>
                     <configuration>
                         <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                        <failIfNoTests>false</failIfNoTests>
+                        <skipTests>${skipTests}</skipTests>
+                        <skipITs>${skipITs}</skipITs>
+                        <groups>${testGroups}</groups>
+                        <runOrder>random</runOrder>
+                        <includes>
+                            <include>**/*IT.kt</include>
+                            <include>**/*IT.java</include>
+                        </includes>
+                        <properties>
+                            <configurationParameters>
+                                junit.jupiter.extensions.autodetection.enabled = true
+                            </configurationParameters>
+                        </properties>
                     </configuration>
                 </plugin>
             </plugins>
@@ -194,6 +272,14 @@
                         </compilerArg>
                     </compilerArgs>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
