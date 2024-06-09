@@ -21,7 +21,7 @@ class UsersResourceIT {
     @Test
     @WithMockUser
     void should_return_proper_error_message_when_user_not_found() throws Exception {
-        mockMvc.perform(get(ENDPOINT_USERS_BY_ID, "1")).andDo(print())
+        mockMvc.perform(get(ENDPOINT_USERS_BY_ID, "d91c9db3-24c6-442f-ab91-29921c560b17")).andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }
