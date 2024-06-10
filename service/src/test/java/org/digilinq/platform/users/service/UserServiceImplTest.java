@@ -1,14 +1,18 @@
 package org.digilinq.platform.users.service;
 
 import org.digilinq.platform.users.dto.User;
+import org.digilinq.platform.users.exceptions.EmailAlreadyExistsException;
+import org.digilinq.platform.users.exceptions.UserAlreadyExistsException;
 import org.digilinq.platform.users.mapping.UserEntityMapper;
 import org.digilinq.platform.users.repository.UserRepository;
 import org.digilinq.platform.users.to.UserEntity;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.UUID;
 
@@ -55,5 +59,23 @@ class UserServiceImplTest {
         assertEquals(USERNAME, savedUser.username());
         assertEquals(ENCRYPTED_PASSWORD, savedUser.encryptedPassword());
         assertEquals(EMAIL, savedUser.email());
+    }
+
+    @Test
+    void should_throw_exception_when_username_already_exists() {
+        final User USER = new User(USER_ID, USERNAME, ENCRYPTED_PASSWORD, EMAIL);
+        Mockito.when(userRepository.existsByUsername(USERNAME)).thenReturn(Boolean.TRUE);
+        Assertions.assertThrows(
+                UserAlreadyExistsException.class, () -> userService.validateUser(USER)
+        );
+    }
+
+    @Test
+    void should_throw_exception_when_email_already_exists() {
+        final User USER = new User(USER_ID, USERNAME, ENCRYPTED_PASSWORD, EMAIL);
+        Mockito.when(userRepository.exists(Mockito.any(Specification.class))).thenReturn(Boolean.TRUE);
+        Assertions.assertThrows(
+                EmailAlreadyExistsException.class, () -> userService.validateUser(USER)
+        );
     }
 }

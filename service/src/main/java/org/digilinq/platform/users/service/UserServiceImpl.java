@@ -5,9 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.digilinq.platform.users.api.MailService;
 import org.digilinq.platform.users.api.UserService;
 import org.digilinq.platform.users.dto.User;
+import org.digilinq.platform.users.exceptions.EmailAlreadyExistsException;
+import org.digilinq.platform.users.exceptions.UserAlreadyExistsException;
 import org.digilinq.platform.users.exceptions.UserNotFoundException;
 import org.digilinq.platform.users.mapping.UserEntityMapper;
 import org.digilinq.platform.users.repository.UserRepository;
+import org.digilinq.platform.users.specifications.UserSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.UUID;
 
 @Service
@@ -38,6 +42,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
+        validateUser(user);
+
         User savedUser = With.value(user).map(mapper::map).perform(repository::save)
                 .map(mapper::map).orElse(null);
 
@@ -46,7 +52,16 @@ public class UserServiceImpl implements UserService {
         return savedUser;
     }
 
-    private void sendVerificationEmail(User user) {
+    void validateUser(User user) {
+        if (repository.existsByUsername(user.username()))
+            throw new UserAlreadyExistsException(MessageFormat.format(
+                    "Username {0} is already exists", user.username()));
+        if (repository.exists(UserSpecification.emailEqualsIgnoreCase(user.email())))
+            throw new EmailAlreadyExistsException(MessageFormat.format(
+                    "Email {0} is already exists", user.email()));
+    }
+
+    void sendVerificationEmail(User user) {
         try {
             logger.info("Sending verification email to {}", user.email());
             String subject = "Welcome to Helmataart! Please Confirm Your Registration";
