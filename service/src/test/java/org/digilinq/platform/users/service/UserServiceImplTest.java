@@ -2,7 +2,7 @@ package org.digilinq.platform.users.service;
 
 import org.digilinq.platform.users.dto.User;
 import org.digilinq.platform.users.exceptions.EmailAlreadyExistsException;
-import org.digilinq.platform.users.exceptions.UserAlreadyExistsException;
+import org.digilinq.platform.users.exceptions.UsernameAlreadyExistsException;
 import org.digilinq.platform.users.mapping.UserEntityMapper;
 import org.digilinq.platform.users.repository.UserRepository;
 import org.digilinq.platform.users.to.UserEntity;
@@ -66,7 +66,7 @@ class UserServiceImplTest {
         final User USER = new User(USER_ID, USERNAME, ENCRYPTED_PASSWORD, EMAIL);
         Mockito.when(userRepository.existsByUsername(USERNAME)).thenReturn(Boolean.TRUE);
         Assertions.assertThrows(
-                UserAlreadyExistsException.class, () -> userService.validateUser(USER)
+                UsernameAlreadyExistsException.class, () -> userService.validateUser(USER)
         );
     }
 

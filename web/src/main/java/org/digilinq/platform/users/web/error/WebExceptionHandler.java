@@ -1,9 +1,16 @@
 package org.digilinq.platform.users.web.error;
 
+import org.digilinq.platform.users.exceptions.EmailAlreadyExistsException;
 import org.digilinq.platform.users.exceptions.PasswordNotMatchException;
 import org.digilinq.platform.users.exceptions.UserNotFoundException;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.digilinq.platform.users.exceptions.UsernameAlreadyExistsException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -25,6 +32,18 @@ public class WebExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(PasswordNotMatchException.class)
     protected ProblemDetail handlePasswordNotMatch(PasswordNotMatchException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    protected ProblemDetail handleEmailAlreadyExists(EmailAlreadyExistsException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(UsernameAlreadyExistsException.class)
+    protected ProblemDetail handleUsernameAlreadyExists(UsernameAlreadyExistsException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

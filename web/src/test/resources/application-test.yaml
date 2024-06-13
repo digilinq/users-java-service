@@ -23,9 +23,9 @@ spring:
 logging:
   level:
     root: INFO
-    org.springframework.web: DEBUG
-    org.hibernate.sql: INFO
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.web: INFO
+#    org.hibernate.sql: DEBUG
+#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
 # Eureka
 eureka:
