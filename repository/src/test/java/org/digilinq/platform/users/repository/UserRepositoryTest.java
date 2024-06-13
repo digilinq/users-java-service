@@ -115,7 +115,7 @@ class UserRepositoryTest {
                 assertDoesNotThrow(() -> repository.findByEmail("manager@example.com"))
         ).isNull();
         UserEntity user = repository.findByEmail("info@example.com");
-        assertThat(user.getUsername()).isEqualTo("u01");
+        assertThat(user.getUsername()).isEqualTo("info@example.com");
         assertThat(user.getEncryptedPassword()).isEqualTo("P@ssw0rd");
     }
 }
