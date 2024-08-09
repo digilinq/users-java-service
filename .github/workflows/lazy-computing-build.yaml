@@ -1,0 +1,22 @@
+name: Build Maven Project
+
+on:
+  push:
+    branches:
+      - '*'
+      - '*/*'
+
+jobs:
+  Build:
+    name: Build maven project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: maven
+
