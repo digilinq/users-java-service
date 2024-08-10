@@ -21,6 +21,8 @@ jobs:
 #          cache: maven
       - name: Build maven project with no integration tests
         run: mvn --batch-mode --update-snapshots package
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 #  SecondBuild:
 #    name: Second build
