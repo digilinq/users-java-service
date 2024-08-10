@@ -19,5 +19,7 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           cache: maven
-      - run: pwd
+      - run: >-
+          pwd
+          ls -la1
 
