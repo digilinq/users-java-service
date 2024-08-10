@@ -7,7 +7,7 @@ on:
       - '*/*'
 
 jobs:
-  Build:
+  build:
     name: Build maven project
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +27,17 @@ jobs:
         run: | 
           mkdir staging && cp web/target/*.jar staging
           cp deployment/Dockerfile staging
-      - uses: actions/upload-artifact@v3
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
         with:
           name: Package
           path: staging
+  create-docker-image:
+    name: Create docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Package
+      - run: ls
