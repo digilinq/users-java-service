@@ -20,5 +20,5 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build maven project with no integration tests
-        run: mvn package
+        run: mvn --batch-mode --update-snapshots package
 
