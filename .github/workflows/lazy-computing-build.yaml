@@ -18,19 +18,8 @@ jobs:
         with:
           java-version: 17
           distribution: 'temurin'
-#          cache: maven
+          cache: maven
       - name: Build maven project with no integration tests
         run: mvn --batch-mode --update-snapshots package
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-#  SecondBuild:
-#    name: Second build
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v4
-#      - uses: actions/setup-java@v3
-#        with:
-#          java-version: 17
-#          distribution: 'temurin'
-#          cache: maven
