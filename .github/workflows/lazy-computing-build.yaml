@@ -23,3 +23,11 @@ jobs:
         run: mvn --batch-mode --update-snapshots package
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Copy artifact and docker file
+        run: | 
+          mkdir staging && cp web/target/*.jar staging
+          cp deployment/Dockerfile staging
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Package
+          path: staging
