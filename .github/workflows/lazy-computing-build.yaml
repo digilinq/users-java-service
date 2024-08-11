@@ -5,7 +5,9 @@ on:
     branches:
       - '*'
       - '*/*'
-
+env:
+  REGISTRY: ${{ vars.CONTAINER_REGISTRY }}
+  USERNAME: ${{ vars.DOCKER_HUB_USERNAME }}
 jobs:
   build:
     name: Build maven project
@@ -45,8 +47,17 @@ jobs:
       - name: Print event name
         run: echo "The event name is ${{ github.event_name }}"
       - name: Login to Container Registry
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ env.USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.PACKAGE }}
+          tags: |
+            type=ref,event=branch,suffix=-{{ sha }}
