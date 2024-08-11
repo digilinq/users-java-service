@@ -69,4 +69,4 @@ jobs:
             type=ref,event=pr
 #            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/') }}
           flavor: |
-            latest=true
+            latest=false
