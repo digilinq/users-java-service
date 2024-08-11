@@ -10,7 +10,6 @@ on:
 env:
   REGISTRY: ${{ vars.CONTAINER_REGISTRY }}
   USERNAME: ${{ vars.DOCKER_HUB_USERNAME }}
-  PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
   PACKAGE: ${{ vars.PACKAGE_NAME }}
 jobs:
   build:
@@ -56,7 +55,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ env.USERNAME }}
-          password: ${{ env.PASSWORD }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
