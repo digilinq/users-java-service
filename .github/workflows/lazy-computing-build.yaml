@@ -3,12 +3,10 @@ name: Build Maven Project
 on:
   push:
     branches:
-      - '*'
-      - '*/*'
-      - '!main'
+      - 'main'
   pull_request:
     branches:
-      - main
+      - 'main'
 env:
   REGISTRY: ${{ vars.CONTAINER_REGISTRY }}
   USERNAME: ${{ vars.DOCKER_HUB_USERNAME }}
