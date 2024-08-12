@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build maven project
-        uses: digilinq/reusable-workflows/blob/main/.github/workflows/build.yaml@t1
+        uses: digilinq/reusable-workflows/.github/workflows/build.yaml@t1
