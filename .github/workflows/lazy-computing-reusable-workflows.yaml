@@ -4,7 +4,7 @@ on:
     branches:
       - 'feature/*'
 jobs:
-  build-maven-project:
+  build:
     uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t1
     with:
       runner: ubuntu-latest
