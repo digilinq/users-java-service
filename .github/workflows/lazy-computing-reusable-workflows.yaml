@@ -6,3 +6,8 @@ on:
 jobs:
   build-maven-project:
     uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t1
+    with:
+      runner: ubuntu-latest
+      ref: ${{ github.ref }}
+      java-version: '17'
+      maven-version: '3.8.2'
