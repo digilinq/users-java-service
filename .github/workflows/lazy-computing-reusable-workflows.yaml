@@ -21,10 +21,11 @@ jobs:
           PGUSER: postgres
       - name: Print SLACK_MESSAGE env
         env:
+          ITEM_ONE: ${{ steps.run_tests.outputs.item1 }}
           SLACK_MESSAGE: ${{ join(steps.run_tests.outputs.*, '\n') }}
           SLACK_TITLE: CI Test Suite
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        run: printenv
+        run: echo $ITEM_ONE
 
   build:
     uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t3
