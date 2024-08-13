@@ -6,6 +6,8 @@ on:
 jobs:
   config:
     runs-on: ubuntu-latest
+    outputs:
+      item1: ${{ steps.run_tests.outputs.item1 }}
     steps:
       - name: Check event name
         id: event
@@ -26,6 +28,14 @@ jobs:
           SLACK_TITLE: CI Test Suite
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         run: echo $ITEM_ONE
+
+  validate:
+    needs:
+      - config
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Item 1
+        run: echo ${{ needs.config.outputs.item1 }}
 
   build:
     uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t3
