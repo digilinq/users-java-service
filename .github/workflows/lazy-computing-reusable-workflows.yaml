@@ -4,6 +4,13 @@ on:
     branches:
       - 'feature/*'
 jobs:
+  config:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check event name
+        id: event
+        run: echo "event_name=${{ github.event_name }}" >> $GITHUB_ENV
+
   build:
     uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t3
     with:
