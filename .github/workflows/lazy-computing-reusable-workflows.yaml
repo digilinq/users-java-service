@@ -10,8 +10,25 @@ jobs:
       - name: Check event name
         id: event
         run: echo "event_name=${{ github.event_name }}" >> "$GITHUB_OUTPUT"
-      - name: Print GITHUB_OUTPUT
-        run: cat $GITHUB_OUTPUT
+      - name: Run tests
+        run: |
+          echo "mix-compile--warnings-as-errors=$(mix compile --warnings-as-errors)\n" >> $GITHUB_OUTPUT
+          echo "mix-format--check-formatted=$(mix format --check-formatted)\n" >> $GITHUB_OUTPUT
+          echo "mix-ecto_create=$(mix ecto.create)\n" >> $GITHUB_OUTPUT
+          echo "mix-ecto_migrate=$(mix ecto.migrate)\n" >> $GITHUB_OUTPUT
+          echo "mix-test=$(mix test)\n" >> $GITHUB_OUTPUT
+        id: run_tests
+        env:
+          MIX_ENV: test
+          PGHOST: localhost
+          PGUSER: postgres
+      - name: Print SLACK_MESSAGE env
+        env:
+          SLACK_MESSAGE: ${{join(steps.run_tests.outputs.*, '\n')}}
+          SLACK_TITLE: CI Test Suite
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        run: echo $SLACK_MESSAGE
+
 
   build:
     uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t3
