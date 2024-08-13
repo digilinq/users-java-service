@@ -27,7 +27,7 @@ jobs:
           SLACK_MESSAGE: ${{join(steps.run_tests.outputs.*, '\n')}}
           SLACK_TITLE: CI Test Suite
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        run: echo ${{ SLACK_MESSAGE }}
+        run: echo $SLACK_MESSAGE
 
 
   build:
