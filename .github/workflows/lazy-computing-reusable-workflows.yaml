@@ -12,8 +12,8 @@ jobs:
         run: echo "event_name=${{ github.event_name }}" >> "$GITHUB_OUTPUT"
       - name: Run tests
         run: |
-          echo "item1=value1\n" >> $GITHUB_OUTPUT
-          echo "item2=value2\n" >> $GITHUB_OUTPUT
+          echo "item1=value1" >> $GITHUB_OUTPUT
+          echo "item2=value2" >> $GITHUB_OUTPUT
         id: run_tests
         env:
           MIX_ENV: test
