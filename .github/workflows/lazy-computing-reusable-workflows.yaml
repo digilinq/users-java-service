@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: Project config
         run: |
+          ls -la
           jq . .github/project-config.json
       - name: Check event name
         id: event
