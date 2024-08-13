@@ -9,10 +9,14 @@ jobs:
     steps:
       - name: Check event name
         id: event
-        run: echo "event_name=${{ github.event_name }}" >> $GITHUB_ENV
+        run: echo "event_name=${{ github.event_name }}" >> "$GITHUB_OUTPUT"
+      - name: Print GITHUB_OUTPUT
+        run: cat $GITHUB_OUTPUT
 
   build:
     uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t3
+    needs:
+      - config
     with:
       runner: ubuntu-latest
       ref: ${{ github.ref }}
