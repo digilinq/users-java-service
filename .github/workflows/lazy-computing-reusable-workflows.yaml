@@ -9,8 +9,9 @@ jobs:
     outputs:
       item1: ${{ steps.run_tests.outputs.item1 }}
     steps:
-      - name: Effective config
-        run: jq -V
+      - name: Project config
+        run: |
+          jq . .github/project-config.json
       - name: Check event name
         id: event
         run: echo "event_name=${{ github.event_name }}" >> "$GITHUB_OUTPUT"
