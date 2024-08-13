@@ -9,10 +9,10 @@ jobs:
     outputs:
       item1: ${{ steps.run_tests.outputs.item1 }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Project config
-        run: |
-          ls -la
-          jq . .github/project-config.json
+        run: jq . .github/project-config.json
       - name: Check event name
         id: event
         run: echo "event_name=${{ github.event_name }}" >> "$GITHUB_OUTPUT"
