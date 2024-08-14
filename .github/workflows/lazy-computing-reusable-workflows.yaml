@@ -31,7 +31,7 @@ jobs:
         env:
           ITEM_ONE: ${{ steps.run_tests.outputs.item1 }}
           CONFIG: ${{ steps.load_project_config.outputs.config }}
-          JAVA_VERSION: ${{ formJson(steps.config.outputs.config).java.version }}
+          JAVA_VERSION: ${{ fromJson(steps.config.outputs.config).java.version }}
           SLACK_MESSAGE: ${{ join(steps.run_tests.outputs.*, '\n') }}
           SLACK_TITLE: CI Test Suite
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
