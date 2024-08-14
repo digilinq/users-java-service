@@ -8,11 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       item1: ${{ steps.run_tests.outputs.item1 }}
+      config: ${{ steps.load_project_config.outputs.config }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Project config
-        run: jq . .github/project-config.json
+      - name: Load project config
+        id: load_project_config
+        run: echo "config=$(jq . .github/project-config.json)" >> "$GITHUB_OUTPUT"
       - name: Check event name
         id: event
         run: echo "event_name=${{ github.event_name }}" >> "$GITHUB_OUTPUT"
@@ -28,10 +30,13 @@ jobs:
       - name: Print SLACK_MESSAGE env
         env:
           ITEM_ONE: ${{ steps.run_tests.outputs.item1 }}
+          CONFIG: ${{ steps.load_project_config.outputs.config }}
           SLACK_MESSAGE: ${{ join(steps.run_tests.outputs.*, '\n') }}
           SLACK_TITLE: CI Test Suite
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        run: echo $ITEM_ONE
+        run: |
+          echo $ITEM_ONE
+          echo $CONFIG
 
   validate:
     needs:
