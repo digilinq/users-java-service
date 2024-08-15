@@ -5,7 +5,7 @@ on:
       - 'feature/*'
 jobs:
   extract-config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t11
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t12
 
   print-extracted-config:
     needs:
