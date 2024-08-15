@@ -5,7 +5,7 @@ on:
       - 'feature/*'
 jobs:
   extract-config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t10
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t11
 
   print-extracted-config:
     needs:
@@ -18,7 +18,7 @@ jobs:
         run: |
           echo "${{ fromJson(needs.extract-config.outputs.config).java.version }}"
           echo "${{ needs.extract-config.outputs.java-version }}"
-          echo "${{ needs.extract-config.outputs.java }}"
+          echo "${{ needs.extract-config.outputs.mave_version }}"
 
   config:
     runs-on: ubuntu-latest
