@@ -13,10 +13,10 @@ env:
   PACKAGE: ${{ vars.PACKAGE_NAME }}
 jobs:
   config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t2
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t3
 
   build:
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t2
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t3
     needs:
       - config
     with:
@@ -28,33 +28,6 @@ jobs:
       artifact-path: 'web/target/*.jar'
       docker-file: 'deployment/Dockerfile'
 
-#  build:
-#    name: Build maven project
-#    runs-on: ubuntu-latest
-#    needs:
-#      - config
-#    steps:
-#      - name: Checkout the code
-#        uses: actions/checkout@v4
-#      - name: Setup JDK ${{ needs.config.outputs.java-version }}
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: ${{ needs.config.outputs.java-version }}
-#          distribution: 'temurin'
-#          cache: maven
-#      - name: Build maven project with no integration tests
-#        run: mvn --batch-mode --update-snapshots package
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Copy artifact and docker file
-#        run: |
-#          mkdir staging && cp web/target/*.jar staging
-#          cp deployment/Dockerfile staging
-#      - name: Upload artifact
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: Package
-#          path: staging
   create-docker-image:
     name: Create docker image
     runs-on: ubuntu-latest
