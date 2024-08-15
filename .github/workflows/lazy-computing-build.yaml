@@ -15,6 +15,16 @@ jobs:
   config:
     uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t13
 
+  build1:
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t3
+    needs:
+      - config
+    with:
+      runner: ubuntu-latest
+      ref: ${{ github.ref }}
+      java-version: ${{ needs.config.outputs.java-version }}
+      maven-version: ${{ needs.config.outputs.maven-version }}
+
   build:
     name: Build maven project
     runs-on: ubuntu-latest
