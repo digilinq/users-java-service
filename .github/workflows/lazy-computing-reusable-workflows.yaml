@@ -18,6 +18,7 @@ jobs:
         run: |
           echo "${{ fromJson(needs.extract-config.outputs.config).java.version }}"
           echo "${{ needs.extract-config.outputs.java-version }}"
+          echo "${{ needs.extract-config.outputs.java }}"
 
   config:
     runs-on: ubuntu-latest
