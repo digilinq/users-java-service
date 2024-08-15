@@ -13,9 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print extracted config
+        run: echo ${{ needs.extract-config.outputs.config }}
+      - name: Print Java version
         run: |
-          echo ${{ needs.extract-config.outputs.config }}
-          echo ${{ needs.extract-config.outputs.java-version }}
+          echo "${{ fromJson(needs.extract-config.outputs.config).java.version }}"
+          echo "${{ needs.extract-config.outputs.java-version }}"
 
   config:
     runs-on: ubuntu-latest
