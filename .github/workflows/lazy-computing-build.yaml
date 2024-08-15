@@ -12,16 +12,21 @@ env:
   USERNAME: ${{ vars.DOCKER_HUB_USERNAME }}
   PACKAGE: ${{ vars.PACKAGE_NAME }}
 jobs:
+  config:
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t12
+
   build:
     name: Build maven project
     runs-on: ubuntu-latest
+    needs:
+      - config
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
-      - name: Setup JDK 17
+      - name: Setup JDK ${{ needs.config.outputs.java-version }}
         uses: actions/setup-java@v3
         with:
-          java-version: 17
+          java-version: ${{ needs.config.outputs.java-version }}
           distribution: 'temurin'
           cache: maven
       - name: Build maven project with no integration tests
