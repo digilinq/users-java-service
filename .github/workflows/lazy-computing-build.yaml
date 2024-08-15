@@ -16,7 +16,7 @@ jobs:
     uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t13
 
   build1:
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t3
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t14
     needs:
       - config
     with:
