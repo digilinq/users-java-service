@@ -4,6 +4,9 @@ on:
     branches:
       - 'feature/*'
 jobs:
+  extract-config:
+    uses: digilinq/reusable-workflows/.github/actions/project-configuration.yaml@t4
+
   config:
     runs-on: ubuntu-latest
     outputs:
