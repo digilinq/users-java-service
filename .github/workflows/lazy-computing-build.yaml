@@ -13,11 +13,11 @@ env:
   PACKAGE: ${{ vars.PACKAGE_NAME }}
 jobs:
   config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t5
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t6
 
   build:
     name: build
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t5
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t6
     needs:
       - config
     with:
