@@ -7,6 +7,14 @@ jobs:
   extract-config:
     uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t8
 
+  print-extracted-config:
+    needs:
+      - extract-config
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print extracted config
+        run: echo ${{ needs.extract-config.outputs.config }}
+
   config:
     runs-on: ubuntu-latest
     outputs:
