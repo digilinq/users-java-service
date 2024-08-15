@@ -27,8 +27,6 @@ jobs:
       artifact-name: 'Package'
       artifact-path: 'web/target/*.jar'
       docker-file: 'deployment/Dockerfile'
-      artifact:
-        name: 'Package'
 
 #  build:
 #    name: Build maven project
