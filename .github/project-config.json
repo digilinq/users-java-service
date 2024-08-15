@@ -1,8 +1,5 @@
 {
-  "java": {
-    "version": "17"
-  },
-  "maven1": {
+  "maven": {
     "version": "3.6.3"
   }
 }
