@@ -39,6 +39,7 @@ jobs:
       runner: 'ubuntu-latest'
       artifact-name: 'Package'
       container-registry: ${{ vars.CONTAINER_REGISTRY }}
+      cr-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 #      username: ${{ env.USERNAME }}
 #      password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
