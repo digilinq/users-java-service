@@ -17,7 +17,7 @@ jobs:
 
   build:
     name: build
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t6
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t8
     needs:
       - config
     with:
@@ -31,13 +31,15 @@ jobs:
 
   create-docker-image-1:
     name: Create docker image
-    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t7
+    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t8
     needs:
       - config
       - build
     with:
       runner: ubuntu-latest
       artifact-name: 'Package'
+      container-registery: ${{ env.REGISTRY }}
+
 
   create-docker-image:
     name: Create docker image
