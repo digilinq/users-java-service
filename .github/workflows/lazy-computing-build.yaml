@@ -35,10 +35,10 @@ jobs:
       - config
       - build
     uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t11
-#    with:
-#      runner: 'ubuntu-latest'
-#      artifact-name: 'Package'
-#      container-registry: ${{ env.REGISTRY }}
+    with:
+      runner: 'ubuntu-latest'
+      artifact-name: 'Package'
+      container-registry: ${{ env.REGISTRY }}
 #      username: ${{ env.USERNAME }}
 #      password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
