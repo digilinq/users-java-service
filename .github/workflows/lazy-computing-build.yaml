@@ -29,6 +29,16 @@ jobs:
       artifact-path: 'web/target/*.jar'
       docker-file: 'deployment/Dockerfile'
 
+  create-docker-image-1:
+    name: Create docker image
+    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t7
+    needs:
+      - config
+      - build
+    with:
+      runner: ubuntu-latest
+      artifact-name: 'Package'
+
   create-docker-image:
     name: Create docker image
     runs-on: ubuntu-latest
