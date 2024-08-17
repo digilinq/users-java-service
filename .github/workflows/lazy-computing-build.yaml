@@ -50,7 +50,7 @@ jobs:
     steps:
       - name: Convert Key-Value Pairs to JSON
         run: |
-          echo "{KEY1: $k1, KEY2: $k2, KEY3: $k3}"    
+          echo "{}"    
           echo "JSON_STRING=$JSON_STRING" >> $GITHUB_ENV
       #          JSON_STRING=$(jq -n --arg k1 VKEY1 --arg k2 VKEY2 --arg k3 VKEY3 '{KEY1: $k1, KEY2: $k2, KEY3: $k3}')
 
