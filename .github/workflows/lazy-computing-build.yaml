@@ -49,10 +49,6 @@ jobs:
     runs-on: 'ubuntu-latest'
     steps:
       - name: Convert Key-Value Pairs to JSON
-        env:
-          KEY1: 'value1'
-          KEY2: 'value2'
-          KEY3: 'value3'
         run: |
           JSON_STRING=$(jq -n \
             --arg k1 "$KEY1" \
@@ -60,6 +56,10 @@ jobs:
             --arg k3 "$KEY3" \
             '{KEY1: $k1, KEY2: $k2, KEY3: $k3}')
           echo "JSON_STRING=$JSON_STRING" >> $GITHUB_ENV
+        env:
+          KEY1: 'value1'
+          KEY2: 'value2'
+          KEY3: 'value3'
 
       - name: Output JSON
         run: echo "$JSON_STRING"
