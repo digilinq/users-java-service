@@ -13,13 +13,13 @@ env:
   PACKAGE: ${{ vars.PACKAGE_NAME }}
 jobs:
   config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t9
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t13
 
   build:
     name: build
     needs:
       - config
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t9
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t13
     with:
       runner: 'ubuntu-latest'
       ref: ${{ github.ref }}
@@ -34,15 +34,16 @@ jobs:
     needs:
       - config
       - build
-    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t12
+    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t13
     with:
       runner: 'ubuntu-latest'
       artifact-name: 'Package'
+      docker-image: ${{ needs.config.outputs.docker-image }}
       container-registry: ${{ vars.CONTAINER_REGISTRY }}
+      cr-username: ${{ vars.DOCKER_HUB_USERNAME }}
+      image-name: ${{ vars.PACKAGE_NAME }}
     secrets:
-      cr-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-#      username: ${{ env.USERNAME }}
-#      password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      container-registry-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
   create-docker-image:
     name: Create docker image
