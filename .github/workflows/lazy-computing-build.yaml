@@ -39,7 +39,7 @@ jobs:
           echo "DOCKER_HUB_USERNAME='user'" >> $GITHUB_ENV
           echo "PACKAGE_NAME='package'" >> $GITHUB_ENV
       - name: Print GITHUB_ENV
-        run: echo $GITHUB_ENV
+        run: echo ${{ toJson(GITHUB_ENV) }}
 
   docker:
     name: Docker
