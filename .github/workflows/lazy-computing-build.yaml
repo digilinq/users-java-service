@@ -33,7 +33,6 @@ jobs:
   docker-image-name:
     name: Set docker image name
     runs-on: ubuntu-latest
-    id: docker-image-name
     outputs:
       docker-image: ${{ steps.convert-to-json.outputs.docker-image }}
     steps:
