@@ -19,7 +19,7 @@ jobs:
     name: build
     needs:
       - config
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t13
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t14
     with:
       runner: 'ubuntu-latest'
       ref: ${{ github.ref }}
