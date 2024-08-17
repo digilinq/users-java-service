@@ -39,7 +39,31 @@ jobs:
           echo "DOCKER_HUB_USERNAME='user'" >> $GITHUB_ENV
           echo "PACKAGE_NAME='package'" >> $GITHUB_ENV
       - name: Print GITHUB_ENV
-        run: printenv
+        run: echo "$GITHUB_ENV"
+
+      - name: Set some outputs via GITHUB_OUTPUT
+        id: set_outputs
+        run: |
+          echo "VAR_1=some_value_1" >> $GITHUB_OUTPUT
+          echo "VAR_2=some_value_2" >> $GITHUB_OUTPUT
+          echo "VAR_3=some_value_3" >> $GITHUB_OUTPUT
+          echo "VAR_4=some_value_4" >> $GITHUB_OUTPUT
+          echo "VAR_5=some_value_5" >> $GITHUB_OUTPUT
+
+      - name: Print outputs
+        run: echo '${{ toJSON(steps.set_outputs.outputs) }}'
+
+      - name: Echo all outputs to GITHUB_ENV
+        run: >
+          echo '${{ toJSON(steps.set_outputs.outputs) }}' 
+          | jq -r 'to_entries[] 
+          | "\(.key)=\(.value)"' 
+          >> $GITHUB_ENV
+
+      - name: Verify vars in GITHUB_ENV
+        run: |
+          # Now should log 'some_value_1'
+          echo $VAR_1
 
   docker:
     name: Docker
@@ -70,10 +94,10 @@ jobs:
     with:
       runner: 'ubuntu-latest'
       artifact-name: 'Package'
-#      docker-image: ${{ needs.config.outputs.docker-image }}
+      #      docker-image: ${{ needs.config.outputs.docker-image }}
       container-registry: ${{ vars.CONTAINER_REGISTRY }}
-#      cr-username: ${{ vars.DOCKER_HUB_USERNAME }}
-#      image-name: ${{ vars.PACKAGE_NAME }}
+    #      cr-username: ${{ vars.DOCKER_HUB_USERNAME }}
+    #      image-name: ${{ vars.PACKAGE_NAME }}
     secrets:
       container-registry-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
