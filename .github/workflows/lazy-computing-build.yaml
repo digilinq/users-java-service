@@ -13,13 +13,13 @@ env:
   PACKAGE: ${{ vars.PACKAGE_NAME }}
 jobs:
   config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t13
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t15
 
   build:
     name: build
     needs:
       - config
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t14
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t15
     with:
       runner: 'ubuntu-latest'
       ref: ${{ github.ref }}
@@ -29,12 +29,32 @@ jobs:
       artifact-path: 'web/target/*.jar'
       docker-file: 'deployment/Dockerfile'
 
+  docker:
+    name: Docker
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Convert Key-Value Pairs to JSON
+        env:
+          KEY1: value1
+          KEY2: value2
+          KEY3: value3
+        run: |
+          JSON_STRING=$(jq -n \
+            --arg k1 "$KEY1" \
+            --arg k2 "$KEY2" \
+            --arg k3 "$KEY3" \
+            '{KEY1: $k1, KEY2: $k2, KEY3: $k3}')
+          echo "JSON_STRING=$JSON_STRING" >> $GITHUB_ENV
+
+      - name: Output JSON
+        run: echo "$JSON_STRING"
+
   create-docker-image-1:
     name: Create docker image
     needs:
       - config
       - build
-    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t14
+    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t15
     with:
       runner: 'ubuntu-latest'
       artifact-name: 'Package'
