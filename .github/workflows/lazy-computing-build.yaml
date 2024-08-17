@@ -40,8 +40,8 @@ jobs:
       artifact-name: 'Package'
       docker-image: ${{ needs.config.outputs.docker-image }}
       container-registry: ${{ vars.CONTAINER_REGISTRY }}
-      cr-username: ${{ vars.DOCKER_HUB_USERNAME }}
-      image-name: ${{ vars.PACKAGE_NAME }}
+#      cr-username: ${{ vars.DOCKER_HUB_USERNAME }}
+#      image-name: ${{ vars.PACKAGE_NAME }}
     secrets:
       container-registry-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
