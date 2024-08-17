@@ -52,10 +52,6 @@ jobs:
         run: |
           JSON_STRING=$(jq -n --arg k1 "VKEY1" --arg k2 "VKEY2" --arg k3 "VKEY3" '{KEY1: $k1, KEY2: $k2, KEY3: $k3}')
           echo "JSON_STRING=$JSON_STRING" >> $GITHUB_ENV
-#        env:
-#          KEY1: value1
-#          KEY2: value2
-#          KEY3: value3
 
       - name: Output JSON
         run: echo "$JSON_STRING"
