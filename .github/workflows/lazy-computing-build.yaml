@@ -45,8 +45,9 @@ jobs:
       - name: Convert to JSON
         id: convert-to-json
         run: |
-          echo "${{ toJSON(steps.docker-image.outputs) }}"
-          echo "docker-image=NONE" >> $GITHUB_OUTPUT
+          JSON=$(echo "${{ toJSON(steps.docker-image.outputs) }}" | jq -c)
+          echo $JSON
+#          echo "docker-image=${{ toJSON(steps.docker-image.outputs) }}" | jq -c >> $GITHUB_OUTPUT
 #          echo "echo $(jq -n --arg registry $(cat registry) --arg owner $(cat owner) --arg image-name $(cat image-name) '{\"registry\":$registry,\"owner\":$owner,\"image-name\":$image-name}')" >> $GITHUB_OUTPUT
 
   create-docker-image-1:
