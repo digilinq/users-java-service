@@ -29,6 +29,18 @@ jobs:
       artifact-path: 'web/target/*.jar'
       docker-file: 'deployment/Dockerfile'
 
+  variables:
+    name: Set variables
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Set variables
+        run: |
+          echo "CONTAINER_REGISTRY='docker.io'" >> $GITHUB_ENV
+          echo "DOCKER_HUB_USERNAME='user'" >> $GITHUB_ENV
+          echo "PACKAGE_NAME='package'" >> $GITHUB_ENV
+      - name: Print GITHUB_ENV
+        run: cat $GITHUB_ENV
+
   docker:
     name: Docker
     runs-on: 'ubuntu-latest'
