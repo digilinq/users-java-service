@@ -34,7 +34,7 @@ jobs:
     needs:
       - config
       - build
-    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t13
+    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t14
     with:
       runner: 'ubuntu-latest'
       artifact-name: 'Package'
