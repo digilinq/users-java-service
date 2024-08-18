@@ -15,13 +15,13 @@ env:
 
 jobs:
   config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t34
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t35
 
   build:
     name: build
     needs:
       - config
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t34
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t35
     with:
       runner: 'ubuntu-latest'
       ref: ${{ github.ref }}
@@ -33,7 +33,7 @@ jobs:
 
   docker-container-registry:
     name: image-specifications
-    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t34
+    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t35
     with:
       registry: ${{ vars.CONTAINER_REGISTRY }}
       owner: ${{ vars.DOCKER_HUB_USERNAME }}
@@ -45,7 +45,7 @@ jobs:
       - config
       - build
       - docker-container-registry
-    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t34
+    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t35
     with:
       runner: 'ubuntu-latest'
       artifact-name: 'Package'
