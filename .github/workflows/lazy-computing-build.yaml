@@ -56,9 +56,9 @@ jobs:
     name: Set docker image name
     runs-on: ubuntu-latest
     outputs:
-      registry: ${{ steps.convert-to-json.outputs.registry }}
-      owner: ${{ steps.convert-to-json.outputs.owner }}
-      image-name: ${{ steps.convert-to-json.outputs.image-name }}
+      registry: ${{ steps.docker-image.outputs.registry }}
+      owner: ${{ steps.docker-image.outputs.owner }}
+      image-name: ${{ steps.docker-image.outputs.image-name }}
     steps:
       - name: Set docker image properties
         id: docker-image
