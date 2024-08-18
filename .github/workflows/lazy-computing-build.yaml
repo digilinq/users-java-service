@@ -30,54 +30,20 @@ jobs:
       artifact-path: 'web/target/*.jar'
       docker-file: 'deployment/Dockerfile'
 
-  docker-image-name:
-    name: Set docker image name
-    runs-on: ubuntu-latest
-    outputs:
-      registry: ${{ steps.docker-image.outputs.registry }}
-      owner: ${{ steps.docker-image.outputs.owner }}
-      image-name: ${{ steps.docker-image.outputs.image-name }}
-    steps:
-      - name: Set docker image properties
-        id: docker-image
-        run: |
-          echo "registry=${{ env.REGISTRY }}" >> $GITHUB_OUTPUT
-          echo "owner=${{ env.USERNAME }}" >> $GITHUB_OUTPUT
-          echo "image-name=${{ env.PACKAGE }}" >> $GITHUB_OUTPUT
-
-  convert-to-json:
-    runs-on: ubuntu-latest
-    needs: [ docker-image-name ]
-    outputs:
-      docker-image: ${{ steps.docker-image.outputs.docker-image }}
-    steps:
-      - run: echo '${{ toJSON(needs.docker-image-name.outputs) }}' | jq -c '.'
-      - run: DOCKER_IMAGE=$(echo '${{ toJSON(needs.docker-image-name.outputs) }}' | jq -c '.') >> $GITHUB_ENV
-      - name: Docker image properties
-        id: docker-image
-        run: echo "docker-image=$(echo '${{ toJSON(needs.docker-image-name.outputs) }}' | jq -c '.')" >> $GITHUB_OUTPUT
-
-  use-json-result:
-    runs-on: ubuntu-latest
-    needs: [ convert-to-json ]
-    steps:
-      - run: echo '${{ needs.convert-to-json.outputs.docker-image }}'
-      - run: echo '${{ fromJSON(needs.convert-to-json.outputs.docker-image).registry }}'
-      - run: echo '${{ fromJSON(needs.convert-to-json.outputs.docker-image).owner }}'
-      - run: echo '${{ fromJSON(needs.convert-to-json.outputs.docker-image).image-name }}'
+  docker-image-specifications:
+    name: image-specifications
+    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t17
 
   create-docker-image-1:
     name: Create docker image
     needs:
       - config
       - build
-      - convert-to-json
+      - docker-image-specifications
     uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t16
     with:
       runner: 'ubuntu-latest'
-      artifact-name: 'Package'
-      docker-image: ${{ needs.convert-to-json.outputs.docker-image }}
-      container-registry: ${{ vars.CONTAINER_REGISTRY }}
+      docker-image: ${{ needs.docker-image-specifications.outputs.docker-image }}
     secrets:
       container-registry-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
