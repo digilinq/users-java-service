@@ -32,7 +32,7 @@ jobs:
 
   docker-container-registry:
     name: image-specifications
-    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t17
+    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t18
     with:
       image: ${{ vars.PACKAGE_NAME }}
 
