@@ -15,13 +15,13 @@ env:
 
 jobs:
   config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t33
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t34
 
   build:
     name: build
     needs:
       - config
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t33
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t34
     with:
       runner: 'ubuntu-latest'
       ref: ${{ github.ref }}
@@ -33,7 +33,7 @@ jobs:
 
   docker-container-registry:
     name: image-specifications
-    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t33
+    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t34
     with:
       registry: ${{ vars.CONTAINER_REGISTRY }}
       owner: ${{ vars.DOCKER_HUB_USERNAME }}
@@ -45,11 +45,11 @@ jobs:
       - config
       - build
       - docker-container-registry
-    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t33
+    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t34
     with:
       runner: 'ubuntu-latest'
       artifact-name: 'Package'
-      docker-image: ${{ needs.docker-container-registry.outputs.specifications }}
+      docker-image: ${{ needs.docker-container-registry.outputs.json }}
     secrets:
       container-registry-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
