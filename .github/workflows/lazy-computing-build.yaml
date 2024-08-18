@@ -56,7 +56,9 @@ jobs:
     name: Set docker image name
     runs-on: ubuntu-latest
     outputs:
-      docker-image: ${{ steps.convert-to-json.outputs.docker-image }}
+      registry: ${{ steps.convert-to-json.outputs.registry }}
+      owner: ${{ steps.convert-to-json.outputs.owner }}
+      image-name: ${{ steps.convert-to-json.outputs.image-name }}
     steps:
       - name: Set docker image properties
         id: docker-image
@@ -64,11 +66,12 @@ jobs:
           echo "registry=${{ env.REGISTRY }}" >> $GITHUB_OUTPUT
           echo "owner=${{ env.USERNAME }}" >> $GITHUB_OUTPUT
           echo "image-name=${{ env.PACKAGE }}" >> $GITHUB_OUTPUT
-      - name: Convert to JSON
-        id: convert-to-json
-        run: |
-          echo "${{ toJSON(steps.docker-image.outputs) }}"
-#          echo "docker-image=$(jq -n --arg registry docker --arg owner user --arg image-name users '{\"registry\":$registry,\"owner\":$owner,\"image-name\":$image-name}')" >> $GITHUB_OUTPUT
+
+  convert-to-json:
+    runs-on: ubuntu-latest
+    needs: [ docker-image-name ]
+    steps:
+      - run: echo '${{ toJSON(needs.docker-image-name.outputs) }}'
 
   create-docker-image-1:
     name: Create docker image
