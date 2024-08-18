@@ -47,6 +47,7 @@ jobs:
     uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t16
     with:
       runner: 'ubuntu-latest'
+      artifact-name: 'Package'
       docker-image: ${{ needs.docker-container-registry.outputs.specifications }}
     secrets:
       container-registry-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
