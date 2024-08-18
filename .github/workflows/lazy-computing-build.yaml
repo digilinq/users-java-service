@@ -77,7 +77,7 @@ jobs:
       - run: DOCKER_IMAGE=$(echo '${{ toJSON(needs.docker-image-name.outputs) }}' | jq -c '.') >> $GITHUB_ENV
       - name: Docker image properties
         id: docker-image
-        run: echo "DOCKER_IMAGE=$(echo '${{ toJSON(needs.docker-image-name.outputs) }}' | jq -c '.')" >> $GITHUB_OUTPUT
+        run: echo "docker-image=$(echo '${{ toJSON(needs.docker-image-name.outputs) }}' | jq -c '.')" >> $GITHUB_OUTPUT
 
   create-docker-image-1:
     name: Create docker image
