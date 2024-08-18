@@ -72,6 +72,7 @@ jobs:
     needs: [ docker-image-name ]
     steps:
       - run: echo '${{ toJSON(needs.docker-image-name.outputs) }}' | jq -c '.'
+      - run: jq -c '.' '${{ toJSON(needs.docker-image-name.outputs) }}'
 
   create-docker-image-1:
     name: Create docker image
