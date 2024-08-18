@@ -15,13 +15,13 @@ env:
 
 jobs:
   config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t25
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t26
 
   build:
     name: build
     needs:
       - config
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t25
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t26
     with:
       runner: 'ubuntu-latest'
       ref: ${{ github.ref }}
@@ -33,20 +33,11 @@ jobs:
 
   docker-container-registry:
     name: image-specifications
-    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t25
+    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t26
     with:
       registry: ${{ vars.CONTAINER_REGISTRY }}
       owner: ${{ vars.DOCKER_HUB_USERNAME }}
       image: ${{ vars.PACKAGE_NAME }}
-
-  print-specifications:
-    name: Print specifications
-    needs:
-      - docker-container-registry
-    runs-on: 'ubuntu-latest'
-    steps:
-      - name: Print specifications
-        run: echo "The specifications are ${{ needs.docker-container-registry.outputs.specifications }}"
 
   create-docker-image-1:
     name: Create docker image
@@ -54,7 +45,7 @@ jobs:
       - config
       - build
       - docker-container-registry
-    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t25
+    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t26
     with:
       runner: 'ubuntu-latest'
       artifact-name: 'Package'
