@@ -62,6 +62,9 @@ jobs:
     needs: [ convert-to-json ]
     steps:
       - run: echo '${{ needs.convert-to-json.outputs.docker-image }}'
+      - run: echo '${{ fromJSON(needs.convert-to-json.outputs.docker-image).registry }}'
+      - run: echo '${{ fromJSON(needs.convert-to-json.outputs.docker-image).owner }}'
+      - run: echo '${{ fromJSON(needs.convert-to-json.outputs.docker-image).image-name }}'
 
   create-docker-image-1:
     name: Create docker image
