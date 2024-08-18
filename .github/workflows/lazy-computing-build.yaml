@@ -39,6 +39,15 @@ jobs:
       owner: ${{ vars.DOCKER_HUB_USERNAME }}
       image: ${{ vars.PACKAGE_NAME }}
 
+  print-specifications:
+    name: Print specifications
+    needs:
+      - docker-container-registry
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Print specifications
+        run: echo "The specifications are ${{ needs.docker-container-registry.outputs.specifications }}"
+
   create-docker-image-1:
     name: Create docker image
     needs:
