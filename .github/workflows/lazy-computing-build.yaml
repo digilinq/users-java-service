@@ -37,9 +37,9 @@ jobs:
     name: image-specifications
     uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t42
     with:
-      registry: ${{ vars.CONTAINER_REGISTRY }}
-      owner: ${{ vars.DOCKER_HUB_USERNAME }}
-      image: ${{ vars.PACKAGE_NAME }}
+      host: ${{ vars.CONTAINER_REGISTRY }}
+      namespace: ${{ vars.DOCKER_HUB_USERNAME }}
+      repository: ${{ vars.PACKAGE_NAME }}
 
   create-docker-image-1:
     name: Create docker image
