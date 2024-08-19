@@ -15,13 +15,13 @@ env:
 
 jobs:
   config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t44
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t45
 
   build:
     name: build
     needs:
       - config
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t44
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t45
     with:
       runner: 'ubuntu-latest'
       ref: ${{ github.ref }}
@@ -35,7 +35,7 @@ jobs:
   # CREATE GITHUB CONTAINER REGISTRY
   docker-container-registry:
     name: image-specifications
-    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t44
+    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t45
     with:
       registry: ${{ vars.CONTAINER_REGISTRY }}
       namespace: ${{ vars.DOCKER_HUB_USERNAME }}
@@ -47,13 +47,19 @@ jobs:
       - config
       - build
       - docker-container-registry
-    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t44
+    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t45
     with:
       runner: 'ubuntu-latest'
       artifact-name: 'Package'
       docker-image: ${{ needs.docker-container-registry.outputs.docker }}
     secrets:
       container-registry-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+  print-pushed-image:
+    needs:
+      - create-docker-image-1
+    name: Print pushed image
+    run: echo "The pushed image is ${{ needs.create-docker-image-1.outputs.docker-image }}"
 
   create-docker-image:
     name: Create docker image
