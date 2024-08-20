@@ -1,0 +1,68 @@
+name: Build Maven Project
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    branches:
+      - 'main'
+env:
+  REGISTRY: ${{ vars.CONTAINER_REGISTRY }}
+  USERNAME: ${{ vars.DOCKER_HUB_USERNAME }}
+  PACKAGE: ${{ vars.PACKAGE_NAME }}
+
+jobs:
+  config:
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@v2
+
+  build:
+    name: build
+    needs:
+      - config
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@v2
+    with:
+      runner: 'ubuntu-latest'
+      ref: ${{ github.ref }}
+      java-version: ${{ needs.config.outputs.java-version }}
+      maven-version: ${{ needs.config.outputs.maven-version }}
+      artifact-name: 'Package'
+      artifact-path: 'web/target/*.jar'
+      docker-file: 'deployment/Dockerfile'
+
+  docker-container-registry:
+    name: image-specifications
+    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@v2
+    with:
+      registry: ${{ vars.CONTAINER_REGISTRY }}
+      namespace: ${{ vars.DOCKER_HUB_USERNAME }}
+      repository: ${{ vars.PACKAGE_NAME }}
+
+  create-docker-image:
+    name: Create docker image
+    needs:
+      - config
+      - build
+      - docker-container-registry
+    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@v2
+    with:
+      runner: 'ubuntu-latest'
+      artifact-name: 'Package'
+      docker-image: ${{ needs.docker-container-registry.outputs.docker }}
+    secrets:
+      container-registry-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+  deploy:
+    name: Deploy
+    needs:
+      - config
+      - create-docker-image
+    uses: digilinq/reusable-workflows/.github/workflows/kubernetes-deploy.yaml@v2
+    with:
+      runner: 'ubuntu-latest'
+      ref: ${{ github.ref }}
+      image: ${{ needs.create-docker-image.outputs.docker-image }}
+      namespace: 'tech-innovative'
+    secrets:
+      kubernetes-url: ${{ secrets.KUBERNETES_URL }}
+      kubernetes-secret: ${{ secrets.KUBERNETES_SECRET }}
