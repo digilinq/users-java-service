@@ -31,8 +31,6 @@ jobs:
       artifact-path: 'web/target/*.jar'
       docker-file: 'deployment/Dockerfile'
 
-  # CREATE DOCKER HUB CONTAINER REGISTRY
-  # CREATE GITHUB CONTAINER REGISTRY
   docker-container-registry:
     name: image-specifications
     uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t46
