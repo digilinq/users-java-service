@@ -41,7 +41,7 @@ jobs:
       namespace: ${{ vars.DOCKER_HUB_USERNAME }}
       repository: ${{ vars.PACKAGE_NAME }}
 
-  create-docker-image-1:
+  create-docker-image:
     name: Create docker image
     needs:
       - config
@@ -58,9 +58,21 @@ jobs:
   print-pushed-image:
     runs-on: ubuntu-latest
     needs:
-      - create-docker-image-1
+      - create-docker-image
     steps:
       - name: Print pushed image
-        run: echo "The pushed image is ${{ needs.create-docker-image-1.outputs.docker-image }}"
+        run: echo "The pushed image is ${{ needs.create-docker-image.outputs.docker-image }}"
 
-
+  deploy:
+    name: Deploy
+    needs:
+      - create-docker-image
+    uses: digilinq/reusable-workflows/.github/workflows/kubernetes-deploy.yaml@t45
+    with:
+      runner: 'ubuntu-latest'
+      ref: ${{ github.ref }}
+      image: ${{ needs.create-docker-image.outputs.docker-image }}
+      namespace: 'default'
+    secrets:
+      kubernetes-url: ${{ secrets.KUBERNETES_URL }}
+      kubernetes-secret: ${{ secrets.KUBERNETES_SECRET }}
