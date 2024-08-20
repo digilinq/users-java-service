@@ -15,13 +15,13 @@ env:
 
 jobs:
   config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t45
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@t46
 
   build:
     name: build
     needs:
       - config
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t45
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@t46
     with:
       runner: 'ubuntu-latest'
       ref: ${{ github.ref }}
@@ -35,7 +35,7 @@ jobs:
   # CREATE GITHUB CONTAINER REGISTRY
   docker-container-registry:
     name: image-specifications
-    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t45
+    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@t46
     with:
       registry: ${{ vars.CONTAINER_REGISTRY }}
       namespace: ${{ vars.DOCKER_HUB_USERNAME }}
@@ -47,7 +47,7 @@ jobs:
       - config
       - build
       - docker-container-registry
-    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t45
+    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@t46
     with:
       runner: 'ubuntu-latest'
       artifact-name: 'Package'
@@ -67,7 +67,7 @@ jobs:
     name: Deploy
     needs:
       - create-docker-image
-    uses: digilinq/reusable-workflows/.github/workflows/kubernetes-deploy.yaml@t45
+    uses: digilinq/reusable-workflows/.github/workflows/kubernetes-deploy.yaml@t46
     with:
       runner: 'ubuntu-latest'
       ref: ${{ github.ref }}
