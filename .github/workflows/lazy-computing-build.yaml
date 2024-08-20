@@ -53,14 +53,6 @@ jobs:
     secrets:
       container-registry-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-  print-pushed-image:
-    runs-on: ubuntu-latest
-    needs:
-      - create-docker-image
-    steps:
-      - name: Print pushed image
-        run: echo "The pushed image is ${{ needs.create-docker-image.outputs.docker-image }}"
-
   deploy:
     name: Deploy
     needs:
