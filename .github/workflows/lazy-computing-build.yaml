@@ -66,6 +66,7 @@ jobs:
   deploy:
     name: Deploy
     needs:
+      - config
       - create-docker-image
     uses: digilinq/reusable-workflows/.github/workflows/kubernetes-deploy.yaml@t46
     with:
