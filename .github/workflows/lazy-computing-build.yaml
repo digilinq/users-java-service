@@ -52,6 +52,16 @@ jobs:
     secrets:
       container-registry-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
+  eval:
+    name: Evaluate
+    needs:
+      - config
+    runs-on: ${{ needs.config.outputs.github-runner }}
+    steps:
+      - name: Evaluate
+        run: |
+          echo "Namespace: ${{ needs.config.outputs.deployment-namespace }}"
+
   deploy:
     name: Deploy
     needs:
