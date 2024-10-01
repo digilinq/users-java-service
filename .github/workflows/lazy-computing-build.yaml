@@ -14,7 +14,7 @@ env:
 
 jobs:
   config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@v5.0.5
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@v5
 
   build:
     name: build
@@ -60,7 +60,7 @@ jobs:
     steps:
       - name: Evaluate
         run: |
-          echo "Namespace: ${{ needs.config.outputs.deployment-namespace }}"
+          echo "Namespace: ${{ needs.config.outputs.kubernetes-namespace }}"
 
   deploy:
     name: Deploy
@@ -72,7 +72,7 @@ jobs:
       runner: ${{ needs.config.outputs.github-runner }}
       ref: ${{ github.ref }}
       image: ${{ needs.create-docker-image.outputs.docker-image }}
-      namespace: ${{ needs.config.outputs.deployment-namespace }}
+      namespace: ${{ needs.config.outputs.kubernetes-namespace }}
       manifests: |
         manifests/deployment.yml
         manifests/service.yaml
