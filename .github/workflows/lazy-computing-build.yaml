@@ -14,7 +14,7 @@ env:
 
 jobs:
   config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@v5
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@v5.0.5
 
   build:
     name: build
