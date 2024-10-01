@@ -52,6 +52,16 @@ jobs:
     secrets:
       container-registry-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
+  eval:
+    name: Evaluate
+    needs:
+      - config
+    runs-on: ${{ needs.config.outputs.github-runner }}
+    steps:
+      - name: Evaluate
+        run: |
+          echo "Namespace: ${{ needs.config.outputs.kubernetes-namespace }}"
+
   deploy:
     name: Deploy
     needs:
@@ -62,7 +72,7 @@ jobs:
       runner: ${{ needs.config.outputs.github-runner }}
       ref: ${{ github.ref }}
       image: ${{ needs.create-docker-image.outputs.docker-image }}
-      namespace: ${{ needs.config.outputs.deployment-namespace }}
+      namespace: ${{ needs.config.outputs.kubernetes-namespace }}
       manifests: |
         manifests/deployment.yml
         manifests/service.yaml
