@@ -4,6 +4,7 @@ import org.digilinq.platform.users.exceptions.EmailAlreadyExistsException;
 import org.digilinq.platform.users.exceptions.PasswordNotMatchException;
 import org.digilinq.platform.users.exceptions.UserNotFoundException;
 import org.digilinq.platform.users.exceptions.UsernameAlreadyExistsException;
+import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -19,6 +20,12 @@ import java.net.URI;
 @RestControllerAdvice
 public class WebExceptionHandler extends ResponseEntityExceptionHandler {
 
+    private final Logger logger;
+
+    public WebExceptionHandler(Logger logger) {
+        this.logger = logger;
+    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(UserNotFoundException.class)
     protected ResponseEntity<Object> handleUserNotFound(UserNotFoundException ex, WebRequest request) {
@@ -31,6 +38,7 @@ public class WebExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(PasswordNotMatchException.class)
     protected ProblemDetail handlePasswordNotMatch(PasswordNotMatchException ex) {
+        logger.warn(ex.getMessage());
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
@@ -50,6 +58,7 @@ public class WebExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleOtherException(Exception ex, WebRequest request) {
         HttpHeaders headers = new HttpHeaders();
         var body = new ResponseError(ex.getMessage());
+        logger.error(ex.getMessage(), ex);
         return super.handleExceptionInternal(ex, body, headers, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 }
