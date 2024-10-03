@@ -4,5 +4,11 @@
   },
   "maven": {
     "version": "3.6.3"
+  },
+  "github": {
+    "runner": "ubuntu-latest"
+  },
+  "deployment": {
+    "namespace": "commerce"
   }
 }

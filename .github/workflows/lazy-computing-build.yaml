@@ -14,15 +14,15 @@ env:
 
 jobs:
   config:
-    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@v2
+    uses: digilinq/reusable-workflows/.github/workflows/project-configuration.yaml@v5
 
   build:
     name: build
     needs:
       - config
-    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@v2
+    uses: digilinq/reusable-workflows/.github/workflows/build-maven-project.yaml@v5
     with:
-      runner: 'ubuntu-latest'
+      runner: ${{ needs.config.outputs.github-runner }}
       ref: ${{ github.ref }}
       java-version: ${{ needs.config.outputs.java-version }}
       maven-version: ${{ needs.config.outputs.maven-version }}
@@ -32,7 +32,7 @@ jobs:
 
   docker-container-registry:
     name: image-specifications
-    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@v2
+    uses: digilinq/reusable-workflows/.github/workflows/docker-image-specifications.yaml@v5
     with:
       registry: ${{ vars.CONTAINER_REGISTRY }}
       namespace: ${{ vars.DOCKER_HUB_USERNAME }}
@@ -44,25 +44,38 @@ jobs:
       - config
       - build
       - docker-container-registry
-    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@v2
+    uses: digilinq/reusable-workflows/.github/workflows/create-docker-image.yaml@v5
     with:
-      runner: 'ubuntu-latest'
+      runner: ${{ needs.config.outputs.github-runner }}
       artifact-name: 'Package'
       docker-image: ${{ needs.docker-container-registry.outputs.docker }}
     secrets:
       container-registry-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+  eval:
+    name: Evaluate
+    needs:
+      - config
+    runs-on: ${{ needs.config.outputs.github-runner }}
+    steps:
+      - name: Evaluate
+        run: |
+          echo "Namespace: ${{ needs.config.outputs.kubernetes-namespace }}"
 
   deploy:
     name: Deploy
     needs:
       - config
       - create-docker-image
-    uses: digilinq/reusable-workflows/.github/workflows/kubernetes-deploy.yaml@v2
+    uses: digilinq/reusable-workflows/.github/workflows/kubernetes-deploy.yaml@v5
     with:
-      runner: 'ubuntu-latest'
+      runner: ${{ needs.config.outputs.github-runner }}
       ref: ${{ github.ref }}
       image: ${{ needs.create-docker-image.outputs.docker-image }}
-      namespace: 'tech-innovative'
+      namespace: ${{ needs.config.outputs.kubernetes-namespace }}
+      manifests: |
+        manifests/deployment.yml
+        manifests/service.yaml
     secrets:
       kubernetes-url: ${{ secrets.KUBERNETES_URL }}
       kubernetes-secret: ${{ secrets.KUBERNETES_SECRET }}
