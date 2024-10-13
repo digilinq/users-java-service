@@ -127,7 +127,7 @@
             </activation>
             <repositories>
                 <repository>
-                    <id>github</id>
+                    <id>eightbits</id>
                     <url>https://maven.pkg.github.com/digilinq/users-service</url>
                     <snapshots>
                         <enabled>true</enabled>
