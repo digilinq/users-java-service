@@ -11,4 +11,6 @@ public interface UserService {
     Page<User> findAll(int page, int size);
 
     User saveUser(User user);
+
+    void deleteUser(UUID uuid);
 }

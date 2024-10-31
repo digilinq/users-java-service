@@ -9,6 +9,7 @@ import org.digilinq.platform.users.generated.v1.model.SignupRequest;
 import org.digilinq.platform.users.web.mapping.UserMapper;
 import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
@@ -27,6 +28,7 @@ public class UserController implements SignupApi {
         this.logger = logger;
     }
 
+    @CrossOrigin
     @Override
     public ResponseEntity<Void> signup(SignupRequest signupRequest) {
         logger.info("Sign up a user");

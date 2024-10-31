@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: User microservice
-  version: 1.0.9
+  version: 1.0.10
 paths:
   /signup:
     post:
@@ -106,6 +106,25 @@ paths:
                 $ref: '#/components/schemas/UserAccount'
         400:
           description: Invalid email or userId
+        404:
+          description: User not found
+    delete:
+      tags:
+        - users
+      description: Delete a user based on given userId
+      operationId: deleteUser
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the user to delete
+      responses:
+        204:
+          description: User deleted successfully
         404:
           description: User not found
   /users/{userId}/credentials:

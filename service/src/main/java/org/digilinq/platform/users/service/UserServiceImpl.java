@@ -52,6 +52,11 @@ public class UserServiceImpl implements UserService {
         return savedUser;
     }
 
+    @Override
+    public void deleteUser(UUID uuid) {
+        repository.deleteById(uuid);
+    }
+
     void validateUser(User user) {
         if (repository.existsByUsername(user.username()))
             throw new UsernameAlreadyExistsException(MessageFormat.format(
