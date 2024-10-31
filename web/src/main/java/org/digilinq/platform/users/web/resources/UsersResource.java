@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,6 +43,7 @@ public class UsersResource implements UsersApi {
         return ResponseEntity.ok(mapper.map(user));
     }
 
+    @CrossOrigin
     @Override
     @Timed(value = "get.all.time", description = "Time taken to return all users")
     public ResponseEntity<List<UserAccount>> findUsers(String username, String email, Integer page, Integer size) {
@@ -68,7 +70,7 @@ public class UsersResource implements UsersApi {
 
         metrics.getSignup().increment();
 
-        URI location = URI.create(String.format("/users/%s", user.userId()));
+        URI location = URI.create(String.format("/users/%s", user.id()));
         return ResponseEntity.created(location).body(mapper.mapToCreateUserResponse(savedUser));
     }
 }

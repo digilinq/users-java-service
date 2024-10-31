@@ -27,17 +27,17 @@ class UserEntityMapperTest {
 
     private static Stream<Arguments> provideUserId() {
         return Stream.of(
-                Arguments.of(null, null),
-                Arguments.of(USER_ID, USER_ID)
+                Arguments.of((Object) null),
+                Arguments.of(USER_ID)
         );
     }
 
     @ParameterizedTest
     @MethodSource("provideUserId")
-    void should_map_user_dto_to_user_entity(UUID userId, UUID expectedUserId) {
+    void should_map_user_dto_to_user_entity(UUID userId) {
         User user = new User(userId, USERNAME, ENCRYPTED_PASSWORD, EMAIL);
         var userEntity = mapper.map(user);
-        assertEquals(expectedUserId, userEntity.getId());
+        assertEquals(userId, userEntity.getId());
         assertEquals(USERNAME, userEntity.getUsername());
         assertEquals(ENCRYPTED_PASSWORD, userEntity.getEncryptedPassword());
         assertEquals(EMAIL, userEntity.getEmail());
@@ -52,7 +52,7 @@ class UserEntityMapperTest {
                 .email(EMAIL)
                 .build();
         var user = mapper.map(userEntity);
-        assertEquals(USER_ID, user.userId());
+        assertEquals(USER_ID, user.id());
         assertEquals(USERNAME, user.username());
         assertEquals(ENCRYPTED_PASSWORD, user.encryptedPassword());
         assertEquals(EMAIL, user.email());

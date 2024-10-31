@@ -55,7 +55,7 @@ class UserServiceImplTest {
                         userEntity.getEncryptedPassword().equals(ENCRYPTED_PASSWORD)
                 ));
 
-        assertEquals(USER_ID, savedUser.userId());
+        assertEquals(USER_ID, savedUser.id());
         assertEquals(USERNAME, savedUser.username());
         assertEquals(ENCRYPTED_PASSWORD, savedUser.encryptedPassword());
         assertEquals(EMAIL, savedUser.email());

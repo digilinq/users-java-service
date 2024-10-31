@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public record User(
-        UUID userId,
+        UUID id,
         String username,
         String encryptedPassword,
         String email
