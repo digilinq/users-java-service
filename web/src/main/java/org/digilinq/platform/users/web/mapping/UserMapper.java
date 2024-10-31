@@ -27,6 +27,6 @@ public interface UserMapper {
     User map(SignupRequest signupRequest);
 
     default URI mapToURI(User user) {
-        return URI.create("users/" + user.id());
+        return URI.create("/v1/users/" + user.id());
     }
 }

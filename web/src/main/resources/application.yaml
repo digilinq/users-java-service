@@ -1,11 +1,3 @@
-logging:
-  level:
-    root: INFO
-    org.springframework.web: INFO
-    org.hibernate: DEBUG
-    com.zaxxer.hikari.HikariConfig: DEBUG
-    com.zaxxer.hikari: TRACE
-
 management:
   server:
     port: 8081
