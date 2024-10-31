@@ -73,4 +73,11 @@ public class UsersResource implements UsersApi {
         URI location = URI.create(String.format("/users/%s", user.id()));
         return ResponseEntity.created(location).body(mapper.mapToCreateUserResponse(savedUser));
     }
+
+    @CrossOrigin
+    @Override
+    public ResponseEntity<Void> deleteUser(String userId) {
+        service.deleteUser(UUID.fromString(userId));
+        return ResponseEntity.noContent().build();
+    }
 }
